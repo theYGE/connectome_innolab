@@ -7,6 +7,8 @@ prune tests/.pytest_cache
 prune docs/build
 prune docs/source/api
 
+prune data
+
 recursive-include docs/source *.py
 recursive-include docs/source *.rst
 recursive-include docs/source *.png
