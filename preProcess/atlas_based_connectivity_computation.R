@@ -4,10 +4,10 @@ connectivity_output = "./Data/Connectivity_Output/output_sample.csv"
 # required inputs are
 ### Main input ###
 # image_file = path to a nifti image (string, indicate the filtered_func_data_clean.nii.gz file)
-image_file = "./Data/UKBiobank/filtered_func_data_clean.nii.gz"
+image_file = "./Data/UKBiobank/filtered_func_data_clean_MNI.nii.gz"
 # Atlas_file = path to a nifti image (string), where ROIs are specified via numeric indices (i.e. in an atlas including 100 ROIs, ROI indices are coded from 1:100)
 # Current Atlas is 1mm, 7-Networks, 400 parcels 
-Atlas_file ="./Data/Atlas/Schaefer2018_400Parcels_7Networks_order_FSLMNI152_1mm.nii.gz"
+Atlas_file ="./Data/Atlas/Schaefer2018_400Parcels_7Networks_order_FSLMNI152_2mm.nii.gz"
 # Fisher_z_transform = boolean (T or F), indicates whether the Pearson-Moment functional connectivity matrix should be Fisher-z transformed
 Fisher_z_transform = F
 ### Atlas preprocessing ###
@@ -32,7 +32,7 @@ motion_file = ""
 WM_nuisance = F
 WM_mask =""
 # CSF_nuisance = boolean (T of F), indicates whether CSF signal should be regressed out from ROI specific timecourses
-# => if T => CSF_mask = path to CSF mask nifti (string) (water regions)
+# => if T => CSF_mask  path to CSF mask nifti (string) (water regions)
 CSF_nuisance = F
 CSF_mask = ""
 
@@ -82,8 +82,7 @@ FC_computation_atlas_based <- function(image_file, Atlas_file, Fisher_z_transfor
   # transform image to matrix
   tic()
   for (i in 1:(dim(image)[4])){
-    # volume_vectorized=image[,,,i]*(Atlas!=0)
-    volume_vectorized=as.vector(image[,,,i])*(Atlas!=0)
+    volume_vectorized=image[,,,i]*(Atlas!=0) 
     image_matrix[,i]=volume_vectorized[Atlas!=0]
   } 
   toc()
@@ -100,12 +99,9 @@ FC_computation_atlas_based <- function(image_file, Atlas_file, Fisher_z_transfor
     n=n+1
     current_ROI=ROIs[i]
     current_voxels=which(Atlas_vectorized==current_ROI)
-    
-    if (length(current_voxels>1)){current_TS_ROI[i,]=colMeans(image_matrix[current_voxels,], na.rm=T)}
-    # if (length(current_voxels==1)){current_TS_ROI[i,]=image_matrix[current_voxels,]}
-    if (length(current_voxels==1)){ifelse(is.na(current_TS_ROI[i,]), image_matrix[current_voxels,], current_TS_ROI[i,])}
-    
-    
+
+    if (length(current_voxels)>1){current_TS_ROI[i,]=colMeans(image_matrix[current_voxels,], na.rm=T)}
+    if (length(current_voxels)==1){current_TS_ROI[i,]=image_matrix[current_voxels,]}
   }
   toc()
   
