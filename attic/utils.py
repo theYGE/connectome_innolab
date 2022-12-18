@@ -1,3 +1,6 @@
+""""
+contains helper functions and similar
+"""
 import functools
 import logging
 from collections.abc import Callable

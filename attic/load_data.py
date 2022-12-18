@@ -1,3 +1,6 @@
+"""
+functions for loading and checking necessary data
+"""
 import logging
 import os
 from urllib.request import urlretrieve

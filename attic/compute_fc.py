@@ -1,3 +1,6 @@
+"""
+compute functional connectivity matrix
+"""
 import logging
 
 import matplotlib.pyplot as plt

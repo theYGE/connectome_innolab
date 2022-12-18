@@ -1,3 +1,6 @@
+"""
+set parameters and run main
+"""
 import logging
 import os
 from pathlib import Path  # included in SL since 3.4
