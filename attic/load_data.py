@@ -1,7 +1,8 @@
-import openneuro as on
-import os
 import logging
+import os
 from urllib.request import urlretrieve
+
+import openneuro as on
 from utils import log_function_call
 
 
@@ -22,10 +23,11 @@ def load_data(dataset_name: str, target_dir: str) -> None:
 
 
 @log_function_call
-def check_atlas(atlas_dir: str,
-                atlas_url: str = "https://github.com/ThomasYeoLab/CBIG/blob/a8c7a0bb845210424ef1c46d1435fec591b2cf3d/stable_projects/brain_parcellation/Schaefer2018_LocalGlobal/Parcellations/MNI/Schaefer2018_200Parcels_17Networks_order_FSLMNI152_2mm.nii.gz?raw=true",
-                atlas_name: str = "Schaefer2018_200Parcels_17Networks_order_FSLMNI152_2mm.nii.gz"
-                ) -> None:
+def check_atlas(
+    atlas_dir: str,
+    atlas_url: str = "https://github.com/ThomasYeoLab/CBIG/blob/a8c7a0bb845210424ef1c46d1435fec591b2cf3d/stable_projects/brain_parcellation/Schaefer2018_LocalGlobal/Parcellations/MNI/Schaefer2018_200Parcels_17Networks_order_FSLMNI152_2mm.nii.gz?raw=true",
+    atlas_name: str = "Schaefer2018_200Parcels_17Networks_order_FSLMNI152_2mm.nii.gz",
+) -> None:
     """
     uses:
     https://github.com/ThomasYeoLab/CBIG/blob/a8c7a0bb845210424ef1c46d1435fec591b2cf3d/stable_projects/brain_parcellation/Schaefer2018_LocalGlobal/Parcellations/MNI/Schaefer2018_200Parcels_17Networks_order_FSLMNI152_2mm.nii.gz

@@ -1,20 +1,27 @@
 import logging
-from utils import log_function_call
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
 
+import matplotlib.pyplot as plt
 import nibabel as nb
+import numpy as np
+import pandas as pd
 from bids import BIDSLayout
+
 # from nilearn import plotting, datasets
 from nilearn.connectome import ConnectivityMeasure
 from nilearn.interfaces.fmriprep import load_confounds_strategy
 from nilearn.maskers import NiftiLabelsMasker
+from utils import log_function_call
 
 
 @log_function_call
-def compute_fc(path_atlas: str, path_out: str, participants: [str], low_pass_freq: float = 0.08, tr: float = 0.08,
-               fwhm_smoothing: float = 8) -> None:
+def compute_fc(
+    path_atlas: str,
+    path_out: str,
+    participants: [str],
+    low_pass_freq: float = 0.08,
+    tr: float = 0.08,
+    fwhm_smoothing: float = 8,
+) -> None:
     """
     do fmriprep pipeline
 
@@ -28,22 +35,45 @@ def compute_fc(path_atlas: str, path_out: str, participants: [str], low_pass_fre
     TODO:
         participants
     """
-    np.seterr(divide='ignore')
-    layout = BIDSLayout(path_out, config=['bids', 'derivatives'])
+    np.seterr(divide="ignore")
+    layout = BIDSLayout(path_out, config=["bids", "derivatives"])
     participants = [""]
-    logging.info("\nSubject IDs: ", layout.get_subjects(), "\nn = ", len(layout.get_subjects()), "\nConditions: ",
-                 layout.get_tasks())
+    logging.info(
+        "\nSubject IDs: ",
+        layout.get_subjects(),
+        "\nn = ",
+        len(layout.get_subjects()),
+        "\nConditions: ",
+        layout.get_tasks(),
+    )
     atlas = nb.load(path_atlas)
-    masker = NiftiLabelsMasker(labels_img=atlas, memory="nilearn_cache", low_pass=low_pass_freq,
-                               t_r=tr, standardize=True, smoothing_fwhm=fwhm_smoothing, verbose=0).fit()
+    masker = NiftiLabelsMasker(
+        labels_img=atlas,
+        memory="nilearn_cache",
+        low_pass=low_pass_freq,
+        t_r=tr,
+        standardize=True,
+        smoothing_fwhm=fwhm_smoothing,
+        verbose=0,
+    ).fit()
     correlation_measure = ConnectivityMeasure(kind="correlation")
     for i, subj in enumerate(participants):
-        logging.info("-----------------------------\nParticipant: ", subj, i, "/", len(participants))
-        func_files = layout.get(subject=subj, datatype="func", desc="preproc", space="MNI152NLin2009cAsym",
-                                extension="nii.gz", return_type="file")
+        logging.info(
+            "-----------------------------\nParticipant: ", subj, i, "/", len(participants)
+        )
+        func_files = layout.get(
+            subject=subj,
+            datatype="func",
+            desc="preproc",
+            space="MNI152NLin2009cAsym",
+            extension="nii.gz",
+            return_type="file",
+        )
         logging.info("\nLoading pre-processed fMRI file: ", func_files[0])
         img = nb.load(func_files[0])
-        confounds, sample_mask = load_confounds_strategy(func_files[0], denoise_strategy="simple", motion="basic")
+        confounds, sample_mask = load_confounds_strategy(
+            func_files[0], denoise_strategy="simple", motion="basic"
+        )
         logging.info("\nLoading confounds: ", list(confounds.head()))
         logging.info("\nFitting to atlas")
         time_series = masker.transform(img, confounds=confounds, sample_mask=sample_mask)

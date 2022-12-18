@@ -1,9 +1,10 @@
+import functools
 import logging
 from collections.abc import Callable
-import functools
-# TODO: cannot import ParamSpec, Concatenate from typing -> import error
-from typing_extensions import ParamSpec, Concatenate
 from typing import TypeVar
+
+# TODO: cannot import ParamSpec, Concatenate from typing -> import error
+from typing_extensions import Concatenate, ParamSpec
 
 P = ParamSpec("P")
 R = TypeVar("R")

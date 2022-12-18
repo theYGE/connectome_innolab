@@ -1,7 +1,8 @@
 import logging
 import os
 from pathlib import Path  # included in SL since 3.4
-from load_data import load_data, check_atlas
+
+from load_data import check_atlas, load_data
 
 SCRIPT_LOCATION = os.getcwd()  # HOME-DIR/attic
 PROJECT_FOLDER = os.path.dirname(SCRIPT_LOCATION)  # HOME-DIR
