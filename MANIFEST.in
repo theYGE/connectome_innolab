@@ -8,6 +8,7 @@ prune docs/build
 prune docs/source/api
 
 prune data
+prune attic
 
 recursive-include docs/source *.py
 recursive-include docs/source *.rst

@@ -40,6 +40,10 @@
 
 A proprocessing and graph-based analytics tool of the human connectome.
 
+## Introduction
+Hello! <br>
+We are Sven, Oleksandr, Simei, Zhiwei and Thomas. This repo is the result of the Innovationslabor Big Data Science at LMU Munich in the winter term 22/23.
+
 ## 💪 Getting Started
 
 > TODO show in a very small amount of space the **MOST** useful thing your package can do.
