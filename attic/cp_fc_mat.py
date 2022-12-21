@@ -10,8 +10,6 @@ PROJECT_FOLDER = os.path.dirname(SCRIPT_LOCATION)  # HOME-DIR
 DATA_FOLDER = os.path.join(PROJECT_FOLDER, "data")
 BIDS_FOLDER = os.path.join(DATA_FOLDER, "bids_struct")
 DESTINATION_FOLDER_FC_MAT = os.path.join(DATA_FOLDER, "fc_mat_folder")
-# DESTINATION_FOLDER_ATLAS_VERTEX = os.path.join(DATA_FOLDER, "atlas_vertex")
-
 
 if not os.path.isdir(DESTINATION_FOLDER_FC_MAT):
     os.mkdir(DESTINATION_FOLDER_FC_MAT)
