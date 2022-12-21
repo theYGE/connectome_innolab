@@ -902,6 +902,9 @@ data/sample_data_*
 # .idea folder (pyCharm creates one...)
 .idea/
 
+# folder for random created correlation matrices
+data/corr_mat
+
 # End of https://www.toptal.com/developers/gitignore/api/macos,linux,windows,python,jupyternotebooks,jetbrains,pycharm,vim,emacs,visualstudiocode,visualstudio
 
 scratch/
