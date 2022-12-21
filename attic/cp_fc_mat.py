@@ -2,6 +2,7 @@
 This script writes fc matrices from a BIDS structure folder into a single folder.
 """
 import os
+import numpy as np
 import shutil
 
 SCRIPT_LOCATION = os.getcwd()  # HOME-DIR/attic
@@ -17,15 +18,15 @@ if os.path.isdir(BIDS_FOLDER):
     folders = os.listdir(BIDS_FOLDER)
     for folder in folders:
         folder_path = os.path.join(BIDS_FOLDER, folder)
-        #print(f"folder_path: {folder_path}")
         folder_files = os.listdir(folder_path)
-        #print(f"folder_files: {folder_files}")
         file_csv = [filename for filename in folder_files if filename.endswith(".csv")]
-        #print(f"csv: {file_csv}")
         if len(file_csv) != 1:
             print(f"expected exactly one csv file in {folder} but found {len(file_csv)}")
             break
         file_csv = file_csv.pop(0)
+        file_name= os.path.splitext(file_csv)[0]
+        # print(f"file_csv: {file_name}")
         source = os.path.join(folder_path, file_csv)
-        destination = os.path.join(DESTINATION_FOLDER, file_csv)
-        shutil.copy(source, destination)
+        destination = os.path.join(DESTINATION_FOLDER, file_name)
+        fc_mat = np.genfromtxt(source, delimiter=",", names=True, dtype=np.float16)
+        np.save(destination, fc_mat)
