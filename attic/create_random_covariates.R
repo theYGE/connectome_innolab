@@ -3,7 +3,7 @@ set.seed(123)
 library(data.table)
 
 data <- data.table(subject_id = numeric(), age = numeric(), sex = factor())
-n.obs <- 1000
+n.obs <- 400000
 
 dir.project <- rstudioapi::getSourceEditorContext()$path  #.../attic/create_random_corr.R
 dir.project <- dirname(dir.project)
@@ -19,15 +19,11 @@ if(!file.exists(dir.tosave)) {
 for (subject_id in seq(n.obs)) {
    sex <- as.factor(sample(c("female", "male"),1))
    age <- sample(seq(from = 18, to = 80), 1)
+   id = paste0("subject_", subject_id, collapse = "")
    data <- rbindlist(list(
      data,
-     data.table(subject_id = subject_id, age = age, sex = sex)
+     data.table(fc_id = id, age = age, sex = sex)
    ))
 }
 
 fwrite(data, file = paste0(dir.tosave, .Platform$file.sep, filename))
-
-
-
-
-
