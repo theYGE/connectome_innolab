@@ -1,3 +1,6 @@
+"""
+several functional utilities.
+"""
 import hydra
 import os
 import numpy as np
@@ -10,6 +13,18 @@ import matplotlib.pyplot as plt
 
 
 def visualize_embedding(h, color, epoch=None, loss=None):
+    """
+    to be implemented...
+    Parameters
+    ----------
+    h:
+    color:
+    epoch:
+    loss:
+
+    Returns: Nonde
+    -------
+    """
     plt.figure(figsize=(7, 7))
     plt.xticks([])
     plt.yticks([])
@@ -22,12 +37,18 @@ def visualize_embedding(h, color, epoch=None, loss=None):
 
 class GraphDataBase(Dataset):
     """
-
+    Creates a pytorch_geometric Dataset.
+    Current use is to load connectome adjacency matrices defined by a 400x400 parcellation of functional connectivity data.
+    For Schaefer2018_200Parcels_17 atlas see for example https://github.com/ThomasYeoLab/CBIG/blob/a8c7a0bb845210424ef1c46d1435fec591b2cf3d/stable_projects/brain_parcellation/Schaefer2018_LocalGlobal/Parcellations/MNI/Schaefer2018_200Parcels_17Networks_order_FSLMNI152_2mm.nii.gz?raw=true
     """
     def __init__(self, root: str, device: torch.device, graph_labels: str = None):
         """
         Initializes Graph-Database. Each Graph can, but must not have certain labels.
         If labels are given the corresponding csv file must contain a column called 'subject_id'.
+        It is important that  connectivity matrices are stored as pytorch tensor (.pt) in directory <root> and file names
+        match with corresponding name in subject_id (neglecting file ending .pt in filename).
+        For example if root contains files subject_1, subject_2 and graph labels are used, there must be rows called
+        subject_1 and subject_2 in the subject_id column of file <graph_labels>.
 
         Args:
             root: string indicating directory of all adjacency matrices in npy format
@@ -50,20 +71,16 @@ class GraphDataBase(Dataset):
 
     def len(self) -> int:
         """
-
         Returns: int length of dataset
-
         """
         return len(self.root_files)
 
     def get(self, idx: int) -> Data:
         """
-
         Args:
             idx: int index of fetched data
 
         Returns: torch.data.Dataset
-
         """
         # edge weights
         file = self.root_files[idx]  # abs path
@@ -89,6 +106,14 @@ class GraphDataBase(Dataset):
 
 @hydra.main(config_path="../conf", config_name="config", version_base="1.3.1")
 def show_data(cfg) -> None:
+    """
+    Parameters
+    ----------
+    cfg: ConnectomeConfig (see config.py)
+
+    Returns: None
+    -------
+    """
     batch_size = cfg.params.get("batch_size")
     graph_labels = cfg.paths.get("graph_labels")
     graph_labels = os.path.dirname(graph_labels)  # .../connectome
