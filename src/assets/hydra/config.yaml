@@ -1,11 +1,10 @@
 params:
   epochs: 100
-  out_channels_vgae: 5
-  out_channels_gae: 5
+  out_channels: 5
   lr: 0.01
   batch_size: 32
   num_workers: 2
   train_share: 0.8
 paths:
-  graph_adjacencies: ${hydra:runtime.cwd}
-  graph_labels: ${hydra:runtime.cwd}
+  graph_adjacencies: ${hydra:runtime.cwd}/../../data/fc_pt/
+  graph_labels: ${hydra:runtime.cwd}/../../data/covariates/covariates.csv
