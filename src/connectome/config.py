@@ -1,32 +1,27 @@
+# -*- coding: utf-8 -*-
 """
 sets dataclasses of objects used with hydra to support static typing.
 """
 from dataclasses import dataclass
-
-
-@dataclass
-class Paths:
-    """
-    Paths
-    """
-    graph_adjacencies: str
-    graph_labels: str
+from hydra.core.config_store import ConfigStore
 
 
 @dataclass
 class Params:
-    """
-    Parameters
-    """
+    """Parameters"""
     epochs: int
-    out_channel: int
+    out_channels: int
+    lr: float
     batch_size: int
+    num_workers: int
+    train_share: float
 
 
 @dataclass
 class ConnectomeConfig:
-    """"
-    configuration object
-    """
-    paths: Paths
+    """"configuration object"""
     params: Params
+
+
+cs = ConfigStore.instance()
+cs.store(name="base_config", node=ConnectomeConfig)

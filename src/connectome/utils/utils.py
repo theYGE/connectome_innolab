@@ -1,7 +1,11 @@
+# -*- coding: utf-8 -*-
 """
 several functional utilities.
 """
 import hydra
+import collections
+from omegaconf import OmegaConf
+import sys
 import os
 import numpy as np
 import pandas as pd
@@ -10,6 +14,17 @@ import torch_geometric
 from torch_geometric.data import Dataset, Data
 from torch_geometric.loader import DataLoader
 import matplotlib.pyplot as plt
+
+# TODO: better way?
+sys.path.append(os.path.dirname(os.getcwd()))  # /src/connectome/conf/config.yaml
+from config import ConnectomeConfig
+
+
+def load_model(path: str) -> collections.OrderedDict:
+    """
+    load pytorch model
+    """
+    return torch.load(path)
 
 
 def visualize_embedding(h, color, epoch=None, loss=None):
@@ -38,14 +53,18 @@ def visualize_embedding(h, color, epoch=None, loss=None):
 class GraphDataBase(Dataset):
     """
     Creates a pytorch_geometric Dataset.
-    Current use is to load connectome adjacency matrices defined by a 400x400 parcellation of functional connectivity data.
-    For Schaefer2018_200Parcels_17 atlas see for example https://github.com/ThomasYeoLab/CBIG/blob/a8c7a0bb845210424ef1c46d1435fec591b2cf3d/stable_projects/brain_parcellation/Schaefer2018_LocalGlobal/Parcellations/MNI/Schaefer2018_200Parcels_17Networks_order_FSLMNI152_2mm.nii.gz?raw=true
+    Current use is to load connectome adjacency matrices defined by a 400x400 parcellation of functional connectivity.
+    For Schaefer2018_200Parcels_17 atlas see for example
+    https://github.com/ThomasYeoLab/CBIG/blob/a8c7a0bb845210424ef1c46d1435fec591b2cf3d/
+    stable_projects/brain_parcellation/Schaefer2018_LocalGlobal/Parcellations/MNI/
+    Schaefer2018_200Parcels_17Networks_order_FSLMNI152_2mm.nii.gz?raw=true
     """
+
     def __init__(self, root: str, device: torch.device, graph_labels: str = None):
         """
         Initializes Graph-Database. Each Graph can, but must not have certain labels.
         If labels are given the corresponding csv file must contain a column called 'subject_id'.
-        It is important that  connectivity matrices are stored as pytorch tensor (.pt) in directory <root> and file names
+        It is important that  connectivity matrices are stored as pytorch tensor(.pt) in directory <root> and file names
         match with corresponding name in subject_id (neglecting file ending .pt in filename).
         For example if root contains files subject_1, subject_2 and graph labels are used, there must be rows called
         subject_1 and subject_2 in the subject_id column of file <graph_labels>.
@@ -58,12 +77,14 @@ class GraphDataBase(Dataset):
         assert (os.path.exists(root))
         assert (isinstance(device, torch.device))
         root_files = os.listdir(root)
+        assert len(root_files) > 1
         root_files = [os.path.join(root, file) for file in root_files]  # abs path here
         root_files.sort()
         self.device = device
+        # TODO: functional and structural and etc.
         self.root_files = root_files
         self.graph_labels = graph_labels
-        # ToDo: set graph labels
+        # TODO: set graph labels
         if graph_labels is not None:
             assert (os.path.isfile(graph_labels))
             _, ending = os.path.splitext(graph_labels)
@@ -96,8 +117,7 @@ class GraphDataBase(Dataset):
         graph_labels = graph_labels.loc[graph_labels["subject_id"] == filename]
         graph_labels.drop("subject_id", axis=1, inplace=True)
         graph_labels = graph_labels.to_numpy()
-        # ToDo: !!!!!!!!!!!!
-        # print(f"labels in get: {graph_labels}")
+        # TODO:
         # cannot assign Dataset(....., y=graph_labels)
         # combine
         edge_idx, edge_attr = torch_geometric.utils.dense_to_sparse(adjacency)
@@ -105,7 +125,7 @@ class GraphDataBase(Dataset):
 
 
 @hydra.main(config_path="../conf", config_name="config", version_base="1.3.1")
-def show_data(cfg) -> None:
+def show_data(cfg: ConnectomeConfig) -> None:
     """
     Parameters
     ----------
@@ -114,22 +134,14 @@ def show_data(cfg) -> None:
     Returns: None
     -------
     """
-    batch_size = cfg.params.get("batch_size")
-    graph_labels = cfg.paths.get("graph_labels")
-    graph_labels = os.path.dirname(graph_labels)  # .../connectome
-    graph_labels = os.path.dirname(graph_labels)  # .../src
-    graph_labels = os.path.dirname(graph_labels)  # .../
-    graph_labels = os.path.join(graph_labels, "data", "covariates", "covariates.csv")
-    print(f"graph_labels file: {graph_labels}")
+    conf = OmegaConf.to_object(cfg)
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    root = cfg.paths.get("graph_adjacencies")
-    root = os.path.dirname(root)  # .../connectome
-    root = os.path.dirname(root)  # .../src
-    root = os.path.dirname(root)  # .../
+    batch_size = conf.get("params").get("batch_size")
+    graph_labels = os.path.dirname(os.path.dirname(os.path.dirname(os.getcwd())))
+    graph_labels = os.path.join(graph_labels, "data", "covariates", "covariates.csv")
+    root = os.path.dirname(os.path.dirname(os.path.dirname(os.getcwd())))
     root = os.path.join(root, "data", "fc_pt")
-    print(f"root: {root}")
-    dataset = GraphDataBase(root, device, graph_labels=graph_labels)
-    dataset = dataset.shuffle()
+    dataset = GraphDataBase(root=root, device=device, graph_labels=graph_labels).shuffle()
     print(f"dataset: {dataset}")
     loader = DataLoader(dataset, batch_size=batch_size, shuffle=True)
     print(f"loader: {loader}")
