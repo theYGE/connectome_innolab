@@ -23,6 +23,7 @@ def graph_embedding1(cfg: ConnectomeConfig):
     matrices_path = os.path.join(root, "data", "fc_pt")
 
     conf = OmegaConf.to_object(cfg)
+    # TODO: check if entry found in dictionary
     batch_size = conf.get("params").get("batch_size")
     train_share = conf.get("params").get("train_share")
     out_channels = conf.get("params").get("out_channels")
@@ -64,7 +65,9 @@ def graph_embedding1(cfg: ConnectomeConfig):
             optimizer.step()
             training_loss += loss.data.item() * batch_size
         training_loss /= len(dataloader)
-        #writer.add_scalars(training_loss, epoch)
+        # TODO: add validation
+        # TODO: pretty tensorboard data
+        writer.add_scalars(training_loss, epoch)
         torch.save(model.state_dict(), os.path.join(assets, "model"))
 
 
