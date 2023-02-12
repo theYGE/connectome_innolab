@@ -18,7 +18,7 @@ def graph_embedding1(root: str, assets: str, graph_label: str, matrices_path: st
     """
     dataset = GraphDataBase(root=matrices_path, device=device, graph_labels=graph_label)
     dataset.shuffle()
-    dataset = dataset[0:300]
+    #dataset = dataset[0:300]
     train_share = int(len(dataset) * train_share)
     train_dataset = dataset[:train_share]
     val_dataset = dataset[train_share:]
