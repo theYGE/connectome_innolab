@@ -1,0 +1,7 @@
+params:
+  epochs: 3
+  out_channels: 5
+  lr: 0.01
+  batch_size: 32
+  num_workers: 2
+  train_share: 0.8

@@ -4,7 +4,7 @@ hydra:
     dir: ${hydra:runtime.cwd}/../../assets/hydra/log
 
 params:
-  epochs: 2
+  epochs: 3
   out_channels: 5
   lr: 0.01
   batch_size: 32

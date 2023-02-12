@@ -14,6 +14,7 @@ def csv_to_pt(source_path: str, destination_path: str) -> None:
     This function reads csv files from <source_path> and copies those as a pytorch tensor (.pt) in <destination_path>.
     """
     assert os.path.isdir(source_path)
+    # TODO: check if all are csv
     if not os.path.isdir(destination_path):
         os.mkdir(destination_path)
     files = os.listdir(source_path)
@@ -98,6 +99,7 @@ def show_some_matrices(matrices_path: List[str], n=7) -> None:
             for col_idx in range(ncol):
                 idx = row_idx + col_idx
                 matrix = matrices[idx]
+                # TODO: check if distinctive matrices are plotted and not last one
                 sns.distplot(matrix, ax=axes[row_idx, col_idx], kde=True, rug=False)
     plt.show()
 
@@ -106,10 +108,10 @@ if __name__ == "__main__":
     FOLDER_PATH = os.getcwd()
     ROOT_PATH = os.path.dirname(FOLDER_PATH)  # src/connectome/
     ROOT_PATH = os.path.dirname(ROOT_PATH)  # src/
-    # DATA_PATH = os.path.join(os.path.dirname(ROOT_PATH), "data")
+    DATA_PATH = os.path.join(os.path.dirname(ROOT_PATH), "data")
     # metadata_path = os.path.join(DATA_PATH, "covariates", "covariates.csv")
-    # raw_path = os.path.join(DATA_PATH, "fc_pt")
+    raw_path = os.path.join(DATA_PATH, "fc_pt")
     # processed_path = os.path.join(DATA_PATH, "fc_pt_processed")
     # preprocess_folder(matrices_raw_path=raw_path, matrices_processed_path=processed_path, metadata_path=metadata_path)
-    # show_some_matrices(raw_path)
+    show_some_matrices(raw_path)
     #csv_to_pt(os.path.join(os.path.dirname(ROOT_PATH), "data", "corr_mat"),os.path.join(os.path.dirname(ROOT_PATH), "data", "test_out"))
