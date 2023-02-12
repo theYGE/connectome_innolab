@@ -5,6 +5,7 @@ several functional utilities.
 import hydra
 import collections
 from omegaconf import OmegaConf
+import warnings
 import sys
 import os
 import numpy as np
@@ -20,36 +21,6 @@ sys.path.append(os.path.dirname(os.getcwd()))  # /src/connectome/conf/config.yam
 from config import ConnectomeConfig
 
 
-def load_model(path: str) -> collections.OrderedDict:
-    """
-    load pytorch model
-    """
-    return torch.load(path)
-
-
-def visualize_embedding(h, color, epoch=None, loss=None):
-    """
-    to be implemented...
-    Parameters
-    ----------
-    h:
-    color:
-    epoch:
-    loss:
-
-    Returns: Nonde
-    -------
-    """
-    plt.figure(figsize=(7, 7))
-    plt.xticks([])
-    plt.yticks([])
-    h = h.detach().cpu().numpy()
-    plt.scatter(h[:, 0], h[:, 1], s=140, c=color, cmap="Set2")
-    if epoch is not None and loss is not None:
-        plt.xlabel(f'Epoch: {epoch}, Loss: {loss.item():.4f}', fontsize=16)
-    plt.show()
-
-
 class GraphDataBase(Dataset):
     """
     Creates a pytorch_geometric Dataset.
@@ -60,7 +31,7 @@ class GraphDataBase(Dataset):
     Schaefer2018_200Parcels_17Networks_order_FSLMNI152_2mm.nii.gz?raw=true
     """
 
-    def __init__(self, root: str, device: torch.device, graph_labels: str = None):
+    def __init__(self, root: str, device: torch.device, graph_labels: str = None, set_graph_labels: bool = False):
         """
         Initializes Graph-Database. Each Graph can, but must not have certain labels.
         If labels are given the corresponding csv file must contain a column called 'subject_id'.
@@ -74,6 +45,13 @@ class GraphDataBase(Dataset):
             graph_labels: string or list of strings indicating csv file containing graph labels
         """
         super().__init__(root)
+        if set_graph_labels:
+            assert (graph_labels is None,
+                    "cannot have <set_graph_labels> == True and have no valid <graph_labels> filepath")
+            warnings.warn('Handling no graph labels needs to be implemented yet')
+        if graph_labels is None:
+            assert(not set_graph_labels,
+                   "cannot have no path to graph labels and <set_graph_labels>==True")
         assert (os.path.exists(root))
         assert (isinstance(device, torch.device))
         root_files = os.listdir(root)
@@ -81,14 +59,14 @@ class GraphDataBase(Dataset):
         root_files = [os.path.join(root, file) for file in root_files]  # abs path here
         root_files.sort()
         self.device = device
-        # TODO: functional and structural and etc.
+        # TODO: functional **and** structural data
         self.root_files = root_files
-        self.graph_labels = graph_labels
-        # TODO: set graph labels
-        if graph_labels is not None:
+
+        if set_graph_labels:
             assert (os.path.isfile(graph_labels))
             _, ending = os.path.splitext(graph_labels)
             assert (ending == ".csv")
+        self.graph_labels = graph_labels  # none by default
 
     def len(self) -> int:
         """
@@ -113,19 +91,21 @@ class GraphDataBase(Dataset):
         filename = os.path.basename(file)
         filename, _ = os.path.splitext(filename)
         data_id, _ = os.path.splitext(filename)
-        graph_labels = pd.read_csv(self.graph_labels)
-        graph_labels = graph_labels.loc[graph_labels["subject_id"] == filename]
-        graph_labels.drop("subject_id", axis=1, inplace=True)
-        graph_labels = graph_labels.to_numpy()
-        # TODO:
-        # cannot assign Dataset(....., y=graph_labels)
-        # combine
         edge_idx, edge_attr = torch_geometric.utils.dense_to_sparse(adjacency)
-        return Data(x=node_features, edge_index=edge_idx, edge_attr=edge_attr)
+        if self.graph_labels is not None:
+            return Data(x=node_features, edge_index=edge_idx, edge_attr=edge_attr)
+            graph_labels = pd.read_csv(self.graph_labels)
+            graph_labels = graph_labels.loc[graph_labels["subject_id"] == filename]
+            graph_labels.drop("subject_id", axis=1, inplace=True)
+            graph_labels = graph_labels.to_numpy()
+            # TODO:
+            # cannot assign Dataset(....., y=graph_labels)
+            # return Data with grap label
+        else:
+            return Data(x=node_features, edge_index=edge_idx, edge_attr=edge_attr)
 
 
-@hydra.main(config_path="../conf", config_name="config", version_base="1.3.1")
-def show_data(cfg: ConnectomeConfig) -> None:
+def show_data() -> None:
     """
     Parameters
     ----------
@@ -134,14 +114,13 @@ def show_data(cfg: ConnectomeConfig) -> None:
     Returns: None
     -------
     """
-    conf = OmegaConf.to_object(cfg)
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    batch_size = conf.get("params").get("batch_size")
-    graph_labels = os.path.dirname(os.path.dirname(os.path.dirname(os.getcwd())))
-    graph_labels = os.path.join(graph_labels, "data", "covariates", "covariates.csv")
+    batch_size = 32
     root = os.path.dirname(os.path.dirname(os.path.dirname(os.getcwd())))
+    graph_labels = os.path.join(root, "data", "covariates", "covariates.csv")
     root = os.path.join(root, "data", "fc_pt")
-    dataset = GraphDataBase(root=root, device=device, graph_labels=graph_labels).shuffle()
+    # dataset = GraphDataBase(root=root, device=device, graph_labels=graph_labels, set_graph_labels=True).shuffle()
+    dataset = GraphDataBase(root=root, device=device)
     print(f"dataset: {dataset}")
     loader = DataLoader(dataset, batch_size=batch_size, shuffle=True)
     print(f"loader: {loader}")

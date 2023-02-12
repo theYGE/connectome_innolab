@@ -10,21 +10,23 @@ from torch_geometric.nn import VGAE
 from torch.optim import Adam
 
 
-def graph_embedding1(root: str, assets: str, graph_label: str, matrices_path: str, checkpoint_dir: str,
+def graph_embedding1(root: str, assets: str, matrices_path: str, checkpoint_dir: str,
                      batch_size: int, train_share: float, out_channels: int, device: torch.device,
-                     learning_rate: float, epochs: int) -> None:
+                     learning_rate: float, epochs: int,
+                     set_graph_labels: bool = False, graph_label: str = None) -> None:
     """
     train graph embedding
     """
     dataset = GraphDataBase(root=matrices_path, device=device, graph_labels=graph_label)
     dataset.shuffle()
-    #dataset = dataset[0:300]
+    # dataset = dataset[0:300]
     train_share = int(len(dataset) * train_share)
     train_dataset = dataset[:train_share]
     val_dataset = dataset[train_share:]
     train_loader = DataLoader(train_dataset, batch_size=batch_size)
     val_loader = DataLoader(val_dataset, batch_size=batch_size)
 
+    # TODO: what if no node features (pyG:dataset.py -> return self.num_node_features) (AttributeError)
     num_features = dataset.num_features
 
     model = VGAE(VarationalGCNEncoder(num_features, out_channels))
@@ -103,4 +105,3 @@ def show_embedding(conf: ConnectomeConfig):
 if __name__ == "__main__":
     root = os.path.dirname(os.path.dirname(os.getcwd()))
     graph_embedding1()
-    # show_embedding()
