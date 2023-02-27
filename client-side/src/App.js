@@ -16,7 +16,7 @@ function App() {
         <h1>
           Connectome project
         </h1>
-          <button onClick={sayHello}><h3>Upload patient image</h3></button>
+          {/*<button onClick={sayHello}><h3>Upload patient image</h3></button>*/}
         <FileUploadSingle/>
       </header>
     </div>
