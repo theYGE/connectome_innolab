@@ -1,5 +1,5 @@
 # This script extracts target file from zip file, in given folders
-# copy this script to the folder for saving the extracted files, then run it.
+# copy this script to the resources for saving the extracted files, then run it.
 
 import multiprocessing as mp
 import os
@@ -25,7 +25,7 @@ def extract_zipfile(zip_info):
 
 def extract_all(zip_path):
     # find out all zips in given path, then extract all of them
-    print("working on folder {}".format(zip_path))
+    print("working on resources {}".format(zip_path))
     zip_filename_list = []
     for file in os.listdir(zip_path):
         if file.endswith(".zip"):
@@ -52,7 +52,7 @@ def extract_all(zip_path):
     # print("Hey Bruh, it take this long {} for a zip.".format(duration))
     # i += 1
     # except:
-    # print("folder {} is not extracted!".format(zip_filename))
+    # print("resources {} is not extracted!".format(zip_filename))
 
 
 # zip_path_list = [r"/home/demenzbild/Downloads/Innolabs_tmp2",]

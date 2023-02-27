@@ -27,7 +27,7 @@ def main() -> None:
         logging of function by entrance on global level
     """
     print("\nCALL MAIN\n")
-    # create data folder if necessary
+    # create data resources if necessary
     Path(DATA_FOLDER).mkdir(parents=True, exist_ok=True)
     # check for atlas
     Path(ATLAS_FOLDER).mkdir(parents=True, exist_ok=True)
