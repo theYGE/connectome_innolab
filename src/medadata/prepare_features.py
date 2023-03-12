@@ -1,3 +1,5 @@
+"""This module prepares the features needed for metadata filtering
+"""
 import pandas as pd
 import os
 import re

@@ -1,3 +1,5 @@
+"""This module filter all the metadata and export the healthy participants and patients in excel files
+"""
 import pandas as pd
 import os
 import re
