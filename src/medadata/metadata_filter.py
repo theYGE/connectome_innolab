@@ -133,6 +133,8 @@ class filter_metadata():
         return False 
     
 if __name__ == "__main__":
+    """get the healthy participants and patients
+    """
     os.chdir(os.path.join(os.getcwd(), "data", "metadata"))
     filter_metadata(get_patients=True).process_all_metadata()
     filter_metadata(get_patients=False).process_all_metadata()

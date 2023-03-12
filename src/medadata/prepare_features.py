@@ -126,6 +126,8 @@ def get_brain_diseases():
         pickle.dump([disease_dict, feature_fields], f)
 
 if __name__ == "__main__":
+    """prepare all features
+    """
     os.chdir(os.path.join(os.getcwd(), "data", "metadata"))
     generate_target_columns()
     get_general_diseases()
