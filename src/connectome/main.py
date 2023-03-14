@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-"""
-start here
-"""
+"""start here"""
 import os
+
 import hydra
 import torch
 from config import ConnectomeConfig
@@ -12,8 +11,11 @@ from train import vgae_graph_embedding
 
 @hydra.main(config_path="../conf", config_name="config", version_base="1.3.1")
 def main(cfg: ConnectomeConfig) -> None:
-    """
-    main routine for our software
+    """Use this as entry point. Hydra decorator used to read config.yaml file.
+
+    Args:
+        cfg (dict): Hydra dictionary of configuration yaml file.
+
     """
     # set path to folders
     root = os.path.dirname(os.path.dirname(os.getcwd()))

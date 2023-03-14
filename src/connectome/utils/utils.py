@@ -1,33 +1,24 @@
 # -*- coding: utf-8 -*-
-"""
-This module contains several smaller functions to reduce overall LOC and hence increase readability as well as handling
-parameters set in configuration yaml file.
-"""
+"""Contains several smaller functions."""
+
 
 import os
 import re
-from sys import path as spath
-from matplotlib import pyplot as plt
-import pandas as pd
 
+import pandas as pd
 import torch
 import torch_geometric
-from torch_geometric.data import Data, Dataset
-from torch_geometric.loader import DataLoader
+from config import ConnectomeConfig
 from hydra.utils import instantiate
-from omegaconf import DictConfig
-from omegaconf import OmegaConf
-
-
-# TODO: better way to include modules?
-spath.append(os.path.dirname(os.getcwd()))
-from config import ConnectomeConfig  # declares classes of config yaml
 from models.models import VariationalGraphAutoEncoder
+from omegaconf import DictConfig, OmegaConf
+from torch_geometric.data import Data, Dataset
 
 
 class GraphDataBase(Dataset):
     """
     Creates a pytorch_geometric Dataset.
+
     Current use is to load connectome adjacency matrices defined by a 400x400 parcellation of functional connectivity.
     For Schaefer2018_200Parcels_17 atlas see for example
     https://github.com/ThomasYeoLab/CBIG/blob/a8c7a0bb845210424ef1c46d1435fec591b2cf3d/
@@ -37,16 +28,20 @@ class GraphDataBase(Dataset):
 
     def __init__(self, root: str, device: torch.device):
         """
-        Initializes Graph-Database. Each Graph can, but must not have certain labels.
+        Initialize Graph-Database. Each Graph can, but must not have certain labels.
+
         If labels are given the corresponding csv file must contain a column called 'subject_id'.
         It is important that  connectivity matrices are stored as pytorch tensor(.pt) in directory <root> and file names
         match with corresponding name in subject_id (neglecting file ending .pt in filename).
-        For example if root contains files subject_1.pt, subject_2.pt and graph labels are used, there must be rows called
-        subject_1 and subject_2 in the subject_id column of file <graph_labels>.
+        For example if root contains files subject_1.pt, subject_2.pt and graph labels are used, there must be rows
+        called subject_1 and subject_2 in the subject_id column of file <graph_labels>.
 
         Args:
-            root: string indicating directory of all adjacency matrices in npy format
-            graph_labels: string or list of strings indicating csv file containing graph labels
+            root (str): Absolute path of directory of all adjacency matrices in .pt format.
+            device (torch.device): GPU or CPU.
+
+        Returns:
+            None
         """
         super().__init__(root)
         assert os.path.exists(root)
@@ -60,16 +55,17 @@ class GraphDataBase(Dataset):
 
     def len(self) -> int:
         """
-        Calculates length of GraphDataBase object
+        Calculate length of GraphDataBase object
 
         Returns:
             int: length of GraphDataBAse object
         """
         return len(self.root_files)
 
-    def get(self, idx: int) -> Data:
+    def get(self, idx: int) -> torch.data.Dataset:
         """
         Reads a connectivity pt file from root as specified by idx.
+
         Args:
             idx (int): index of fetched data
 
@@ -82,58 +78,7 @@ class GraphDataBase(Dataset):
         node_features = torch.sum(adjacency, 1)
         node_features = torch.unsqueeze(node_features, 1)
         edge_idx, edge_attr = torch_geometric.utils.dense_to_sparse(adjacency)
-
         return Data(x=node_features, edge_index=edge_idx, edge_attr=edge_attr)
-
-
-def show_data() -> None:
-    """ """
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    batch_size = 32
-    root = os.path.dirname(os.path.dirname(os.path.dirname(os.getcwd())))
-    graph_labels = os.path.join(root, "data", "covariates", "covariates.csv")
-    root = os.path.join(root, "data", "fc_pt")
-    # dataset = GraphDataBase(root=root, device=device, graph_labels=graph_labels, set_graph_labels=True).shuffle()
-    dataset = GraphDataBase(root=root, device=device)
-    print(f"dataset: {dataset}")
-    loader = DataLoader(dataset, batch_size=batch_size, shuffle=True)
-    print(f"loader: {loader}")
-    data = dataset[0]
-    print(f"data: {data}")
-
-
-def plot_training(
-    path_csv: str, path_to_store: str = None, filename: str = None, rename_dict=None
-) -> None:
-    """
-    plot training error
-    """
-    assert os.path.isdir(path_csv)
-    # assert (path_to_store is not None & filename is not None) | (
-    #    path_to_store is None & filename is None
-    # )
-
-    files = os.listdir(path_csv)
-    files = [os.path.join(path_csv, file) for file in files]
-    df = pd.DataFrame()
-    for file in files:
-        group_name = os.path.basename(file)
-        if group_name in rename_dict:
-            group_name = rename_dict.get(group_name)
-        else:
-            group_name = os.path.splitext(group_name)[0]
-        dataframe = pd.read_csv(file)
-        dataframe.set_index(["epoch"], inplace=True)
-        dataframe["group"] = group_name
-        df = pd.concat([df, dataframe])
-
-    df = df.reset_index(level=0)
-    dfp = df.pivot(index="epoch", columns="group", values="train_error")
-    dfp.plot()
-    plt.ylabel("validation error")
-    if not path_to_store is None:
-        plt.savefig(os.path.join(path_to_store, filename))
-    plt.show()
 
 
 def complete_vgae(conf: ConnectomeConfig, in_channels: int):
@@ -142,10 +87,12 @@ def complete_vgae(conf: ConnectomeConfig, in_channels: int):
     ('in_channels') and in configuration file (activation). It assumes that except for <in_channels> all information
     necessary for creating hidden layer is written in config file in subsections 'layer_architecture' and 'activation'
     within the upper 'vgae' section.
-    TODO: static typing **any** from torch_geometry.nn.<model>
+
     Args:
         conf (ConnectomeConfig): hydra style dictionary of config.yaml file.
         in_channels (int): number of input channels.
+
+
     Returns:
         model.VariationalGraphAutoEncoder: the completed VGAE from models module.
     """
@@ -159,15 +106,11 @@ def complete_vgae(conf: ConnectomeConfig, in_channels: int):
     mu_out_channels = conf.get("vgae").get("mu_out_channels")
     logstd_out_channels = conf.get("vgae").get("logstd_out_channels")
     hidden_layer = set_hidden_layer(conf, in_channels, hidden_out_channels)
-    mu_layer = set_hidden_layer(
-        conf, in_channels=hidden_out_channels, out_channels=mu_out_channels
-    )
+    mu_layer = set_hidden_layer(conf, in_channels=hidden_out_channels, out_channels=mu_out_channels)
     logstd_layer = set_hidden_layer(
         conf, in_channels=hidden_out_channels, out_channels=logstd_out_channels
     )
-
     activation = conf.get("vgae").get("activation")
-    # mu_layer
     vgae = VariationalGraphAutoEncoder(
         hidden_layer=hidden_layer,
         mu_layer=mu_layer,
@@ -179,18 +122,18 @@ def complete_vgae(conf: ConnectomeConfig, in_channels: int):
 
 def set_hidden_layer(conf: ConnectomeConfig, in_channels: int, out_channels: int):
     """
-    This function returns the hidden layer for VGAE. Except for number of input_channels which are typically only known
+    Create hidden layer for VGAE.
+
+    Except for number of input_channels which are typically only known
     at runtime all other parameters must be set in config file in 'vgae' entry. It's expected that 'vgae' entry contains
     'layer_architecture' entry which specifies the (partial) hidden NN architecture of the used VGAE.
-
-    TODO: static type checking **any** from torch_geometry.nn
 
     Args:
         conf (ConnectomeConfig): hydra style dictionary of config.yaml file.
         in_channels (int): number of input channels.
         out_channels (int): number of output channels.
 
-    Returns:
+    Return:
         torch_geometric.nn.<model>
     """
     assert isinstance(conf, (DictConfig, dict))
@@ -203,9 +146,19 @@ def set_hidden_layer(conf: ConnectomeConfig, in_channels: int, out_channels: int
     return layer_full
 
 
-def select_optimal_model(checkpoints_folder: str, log_file: str, erase: bool = True):
+def select_optimal_model(checkpoints_folder: str, log_file: str):
     """
-    Based on data in <log_file> pinpoint optimal model in <checkpoints_folder>
+    Select optimal (trained-) Model.
+
+    Based on data in <log_file> pinpoint optimal model in <checkpoints_folder>.
+    It is assumed that <log_file> is a csv file containing columns 'epoch', 'train_error', 'validation_error'.
+
+    Args:
+        checkpoints_folder (str): Absolute path to folder with fitted model of each epoch.
+        log_file (str): Absolute path to file with validation and training error.
+
+    Return:
+        torch_geometric.nn.<model>
     """
     assert os.path.isfile(log_file)
     assert os.path.splitext(log_file)[1] == ".csv"
@@ -219,7 +172,7 @@ def select_optimal_model(checkpoints_folder: str, log_file: str, erase: bool = T
     to_find = re.compile(pattern)
     optimal_model_list = list(filter(to_find.search, models))
     model = torch.load(optimal_model_list[0])
-    print(model)
+    return model
 
 
 if __name__ == "__main__":
@@ -239,4 +192,3 @@ if __name__ == "__main__":
     # model_log = os.path.join(ASSETS_FOLDER, "log", "2023-03-08:20:11:53.csv")
     # select_optimal_model(models_checkpoints, model_log, erase=False)
     model = complete_vgae(conf_dictionary, 20)
-    print(model)

@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*-
-"""
-sets dataclasses of objects used with hydra to support static typing.
-"""
+"""sets dataclasses of objects used with hydra to support static typing."""
+
 from dataclasses import dataclass
+
 from hydra.core.config_store import ConfigStore
 
 
 @dataclass
 class Params:
     """Parameters"""
+
     epochs: int
     out_channels: int
     lr: float
@@ -18,9 +19,20 @@ class Params:
 
 
 @dataclass
+class Vgae:
+    """VGAE params"""
+
+    hidden_out_channels: int
+    mu_out_channels: int
+    logstd_out_channels: int
+
+
+@dataclass
 class ConnectomeConfig:
-    """"configuration object"""
+    """configuration object"""
+
     params: Params
+    vgae: Vgae
 
 
 cs = ConfigStore.instance()

@@ -1,15 +1,11 @@
 # -*- coding: utf-8 -*-
-"""
-sanity checks
-"""
+"""Do checks between certain steps in complete pipeline"""
 import os
 
 
-def check_pre_training(
-    connectivity_csv_folder: str, min_train_files: int = 1
-) -> tuple[bool, str]:
+def check_pre_training(connectivity_csv_folder: str, min_train_files: int = 1) -> tuple[bool, str]:
     """
-    Some checks before a (new) GNN model is trained.
+    Do checks before a (new) GNN model is trained.
 
     Args:
         connectivity_csv_folder (str): Absolute path to folder that contains
@@ -23,7 +19,7 @@ def check_pre_training(
     csv_folder_env = os.listdir(os.path.dirname(connectivity_csv_folder))
     n_files = len(os.listdir(connectivity_csv_folder))
     if n_files < min_train_files:
-        msg = csv_folder_name + "contains only " + n_files + "files."
+        msg = csv_folder_name + "contains only " + str(n_files) + "files."
         return False, msg
     # all files are .csv?
     if check_all_ending(connectivity_csv_folder, ".csv"):
