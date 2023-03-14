@@ -4,6 +4,7 @@
 import os
 import tempfile
 import torch_geometric.nn
+import torch_geometric
 from src.connectome.utils import utils
 import torch
 
