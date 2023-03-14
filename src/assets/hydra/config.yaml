@@ -1,0 +1,14 @@
+params:
+  epochs: 2
+  out_channels: 10
+  lr: 0.01
+  batch_size: 32
+  num_workers: 2
+  train_share: 0.8
+vgae_architecture:
+  _target_: torch_geometric.nn.ChebConv
+  k: 5
+  out_channels: 10
+  _partial_: true
+layers:
+  _target_: torch_geometric.nn.GCNConv
