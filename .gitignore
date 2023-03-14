@@ -907,4 +907,12 @@ data/corr_mat
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,linux,windows,python,jupyternotebooks,jetbrains,pycharm,vim,emacs,visualstudiocode,visualstudio
 
-scratch/
+data/bids_struct/
+data/atlas/
+data/download/
+data/corr_mat_corrupted/
+data/covariates
+data/fc_pt/
+data/fc_pt_processed/
+data/sc_pt/
+data/test_out/
