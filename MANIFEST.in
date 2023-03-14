@@ -24,3 +24,4 @@ include README.md LICENSE
 exclude tox.ini .flake8 .bumpversion.cfg .readthedocs.yml
 exclude src/connectome_innolab/assets/hydra
 include requirements.txt
+include conftest.py
