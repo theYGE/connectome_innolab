@@ -17,8 +17,12 @@ def vgae_graph_embedding(
     assets_folder: str,
 ) -> None:
     """
-    Train graph variational graph autoencoder with parameters from config yaml on data from pt_files and write results
-    into assets_folder.
+    Train graph variational graph autoencoder.
+
+    Using functional connectivity data in <pt_files> this function trains a graph variational autoencoder.
+    Certain training parameters can be set in configuration yaml file. Epoch models created during training will be
+    written in a 'checkpoints' folder in <assets_folder> directory. Test and validation data will be written in
+    <assets_folder>.
 
     Args:
         conf (ConnectomeConfig): Dictionary of configuration file

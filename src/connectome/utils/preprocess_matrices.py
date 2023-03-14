@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-""" preprocess connectivity matrices"""
+"""preprocess connectivity matrices"""
 import os
 
 import numpy as np
@@ -10,7 +10,7 @@ def csv_to_pt(
     source_path: str, destination_path: str, skip_col: int = 1, skip_row: int = 1
 ) -> None:
     """
-    This function reads csv files from <source_path> and copies those as a pytorch tensor (.pt) in <destination_path>.
+    Read csv files from <source_path> and copies those as a pytorch tensor (.pt) in <destination_path>.
 
     Args:
         source_path (str): Absolute path of data source directory

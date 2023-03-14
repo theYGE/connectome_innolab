@@ -1,18 +1,18 @@
 # -*- coding: utf-8 -*-
 """Contains several smaller functions."""
-
-
 import os
+import sys
 import re
-
 import pandas as pd
 import torch
 import torch_geometric
-from config import ConnectomeConfig
 from hydra.utils import instantiate
-from models.models import VariationalGraphAutoEncoder
 from omegaconf import DictConfig, OmegaConf
 from torch_geometric.data import Data, Dataset
+
+sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
+from config import ConnectomeConfig
+from models.models import VariationalGraphAutoEncoder
 
 
 class GraphDataBase(Dataset):
@@ -47,7 +47,7 @@ class GraphDataBase(Dataset):
         assert os.path.exists(root)
         assert isinstance(device, torch.device)
         root_files = os.listdir(root)
-        assert len(root_files) > 1
+        assert len(root_files) >= 1
         root_files = [os.path.join(root, file) for file in root_files]  # abs path here
         root_files.sort()
         self.device = device
@@ -62,9 +62,9 @@ class GraphDataBase(Dataset):
         """
         return len(self.root_files)
 
-    def get(self, idx: int) -> torch.data.Dataset:
+    def get(self, idx: int) -> torch_geometric.data:
         """
-        Reads a connectivity pt file from root as specified by idx.
+        Read connectivity .pt file from root as specified by idx.
 
         Args:
             idx (int): index of fetched data
@@ -83,6 +83,8 @@ class GraphDataBase(Dataset):
 
 def complete_vgae(conf: ConnectomeConfig, in_channels: int):
     """
+    Complete a partial specified VGAE.
+
     This function "completes" the VariationalGraphAutoEncoder in module models with information provided at runtime
     ('in_channels') and in configuration file (activation). It assumes that except for <in_channels> all information
     necessary for creating hidden layer is written in config file in subsections 'layer_architecture' and 'activation'
@@ -98,19 +100,23 @@ def complete_vgae(conf: ConnectomeConfig, in_channels: int):
     """
     assert isinstance(conf, (DictConfig, dict))
     assert "vgae" in conf
-    assert "hidden_out_channels"
-    assert "mu_out_channels"
-    assert "logstd_out_channels"
-    assert "layer_architecture"
-    hidden_out_channels = conf.get("vgae").get("hidden_out_channels")
-    mu_out_channels = conf.get("vgae").get("mu_out_channels")
-    logstd_out_channels = conf.get("vgae").get("logstd_out_channels")
+    vgae_dict = conf["vgae"]
+    assert "hidden_out_channels" in vgae_dict
+    assert "mu_out_channels" in vgae_dict
+    assert "logstd_out_channels" in vgae_dict
+    assert "layer_architecture" in vgae_dict
+
+    hidden_out_channels = vgae_dict["hidden_out_channels"]
+    mu_out_channels = vgae_dict["mu_out_channels"]
+    logstd_out_channels = vgae_dict["logstd_out_channels"]
     hidden_layer = set_hidden_layer(conf, in_channels, hidden_out_channels)
-    mu_layer = set_hidden_layer(conf, in_channels=hidden_out_channels, out_channels=mu_out_channels)
+    mu_layer = set_hidden_layer(
+        conf, in_channels=hidden_out_channels, out_channels=mu_out_channels
+    )
     logstd_layer = set_hidden_layer(
         conf, in_channels=hidden_out_channels, out_channels=logstd_out_channels
     )
-    activation = conf.get("vgae").get("activation")
+    activation = vgae_dict["activation"]
     vgae = VariationalGraphAutoEncoder(
         hidden_layer=hidden_layer,
         mu_layer=mu_layer,
@@ -138,10 +144,11 @@ def set_hidden_layer(conf: ConnectomeConfig, in_channels: int, out_channels: int
     """
     assert isinstance(conf, (DictConfig, dict))
     assert "vgae" in conf, "Expected to find 'vgae' entry in configuration dictionary."
-    assert "layer_architecture" in conf.get(
-        "vgae"
+    assert (
+        "layer_architecture" in conf["vgae"]
     ), "Expected to find 'layer_architecture' entry in vgae entry."
-    layer_partial = instantiate(conf.get("vgae").get("layer_architecture"))
+    vgae_dict = conf["vgae"]
+    layer_partial = instantiate(vgae_dict["layer_architecture"])
     layer_full = layer_partial(in_channels=in_channels, out_channels=out_channels)
     return layer_full
 

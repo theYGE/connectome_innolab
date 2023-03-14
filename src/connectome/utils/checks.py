@@ -3,7 +3,9 @@
 import os
 
 
-def check_pre_training(connectivity_csv_folder: str, min_train_files: int = 1) -> tuple[bool, str]:
+def check_pre_training(
+    connectivity_csv_folder: str, min_train_files: int = 1
+) -> tuple[bool, str]:
     """
     Do checks before a (new) GNN model is trained.
 
@@ -25,7 +27,7 @@ def check_pre_training(connectivity_csv_folder: str, min_train_files: int = 1) -
     if check_all_ending(connectivity_csv_folder, ".csv"):
         # if yes then check if there is corresponding folder with '.pt' files.
         pt_folder_name = os.path.splitext(csv_folder_name)[0] + ".pt"
-        if not pt_folder_name in csv_folder_env:
+        if pt_folder_name not in csv_folder_env:
             msg = (
                 "Could not find "
                 + pt_folder_name
