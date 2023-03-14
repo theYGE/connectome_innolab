@@ -14,3 +14,5 @@ omegaconf>=2.3.0
 nibabel>=5.0.0
 matplotlib>=3.6.3
 seaborn>=0.12.2
+
+click>=8.1.3

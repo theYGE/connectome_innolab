@@ -134,7 +134,7 @@ hydra:
     - path: hydra.conf
       schema: pkg
       provider: hydra
-    - path: /home/svenmaurice/05_version_control/01_github/connectome_innolab/conf
+    - path: /home/svenmaurice/05_version_control/01_github/connectome_innolab/src/conf
       schema: file
       provider: main
     - path: ''

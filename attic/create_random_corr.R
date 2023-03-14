@@ -37,7 +37,7 @@ for (i in seq(n.obs)) {
   filename.corr <- paste0(dir.corr.tosave, .Platform$file.sep, "subject_", i, ".csv")
   filename.parcorr <- paste0(dir.parcorr.tosave, .Platform$file.sep, "rand_pcorr_", i, ".csv")
   
-  corrmat <- abs(randcorr(n.roi))  # only positive
+  corrmat <- randcorr(n.roi)  # only positive
   # corrmat[zeros.coord1, zeros.coord2] <- 0
   parcorrmat <- cor2pcor(corrmat)
   write.table(corrmat, file = filename.corr, col.names = TRUE, row.names = FALSE, sep = ",")

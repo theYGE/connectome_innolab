@@ -1,9 +1,12 @@
-import torch
 import re
+
+import torch
+
 """
 This script writes fc matrices npy format from a BIDS structure folder into a single folder.
 """
 import os
+
 import numpy as np
 
 SCRIPT_LOCATION = os.getcwd()  # HOME-DIR/attic
@@ -36,12 +39,12 @@ if not os.path.isdir(DESTINATION_FOLDER_FC_MAT):
 
 def rename(root: str) -> None:
     files = os.listdir(root)
-    #files = [os.path.join(root, file) for file in files]
+    # files = [os.path.join(root, file) for file in files]
     for file in files:
         filename, ending = os.path.splitext(file)
         id = re.findall("\d+", filename)[-1]
         newname = os.path.join(root, "subject_" + id + ending)
         oldname = os.path.join(root, file)
-        #print(f"oldname: {oldname}")
-        #print(f"newname: {newname}")
+        # print(f"oldname: {oldname}")
+        # print(f"newname: {newname}")
         os.rename(oldname, newname)
