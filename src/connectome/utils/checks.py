@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 """Do checks between certain steps in complete pipeline"""
 import os
+from typing import Tuple
 
 
 def check_pre_training(
     connectivity_csv_folder: str, min_train_files: int = 1
-) -> tuple[bool, str]:
+) -> Tuple[bool, str]:
     """
     Do checks before a (new) GNN model is trained.
 
