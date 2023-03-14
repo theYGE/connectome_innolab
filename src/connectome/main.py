@@ -14,7 +14,7 @@ def main(cfg: ConnectomeConfig) -> None:
     """Use this as entry point. Hydra decorator used to read config.yaml file.
 
     Args:
-        cfg (dict): Hydra dictionary of configuration yaml file.
+        cfg (ConnectomeConfig): Hydra dictionary of configuration yaml file.
 
     """
     # set path to folders

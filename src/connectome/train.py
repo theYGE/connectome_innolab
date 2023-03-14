@@ -29,9 +29,6 @@ def vgae_graph_embedding(
         device (torch.device): GPU or CPU
         pt_files (str): Path to folder with .pt files
         assets_folder (str): Path to assets folder.
-
-    Returns:
-        None
     """
     # TODO: logger
     assert os.path.isdir(assets_folder)

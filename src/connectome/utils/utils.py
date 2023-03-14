@@ -39,9 +39,6 @@ class GraphDataBase(Dataset):
         Args:
             root (str): Absolute path of directory of all adjacency matrices in .pt format.
             device (torch.device): GPU or CPU.
-
-        Returns:
-            None
         """
         super().__init__(root)
         assert os.path.exists(root)

@@ -28,8 +28,6 @@ class VariationalGraphAutoEncoder(torch.nn.Module):
             mu_layer (torch_geometric.nn.<model>): complete NN architecture for mu.
             logstd_layer (torch_geometric.nn.<model>): complete NN architexture for log_std.
             activation (torch.nn.<activation>): activation function to be used
-        Returns:
-            torch._geometric.nn.VGAE: Graph variational Autoencodder
         """
         super(VariationalGraphAutoEncoder, self).__init__()
         self.hidden_layer = hidden_layer
