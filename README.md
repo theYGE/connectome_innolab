@@ -42,7 +42,7 @@
 A preprocessing and graph-based analytics tool for anomaly detection in the human connectome.
 </h1>
 
-<img label='teaser_img' src='data\readme\teaser_image.jpg'>
+<img label='teaser_img' src='attic\readme\teaser_image.jpg'>
 
 ## Abstract
 Neurological diseases and psychiatric disorders are increasingly prevalent [1][2].
@@ -98,6 +98,8 @@ Our GCN model returns a five dimensional embedding space, which serves as input 
 * data: Data handling & exploratory analysis of UKB dataset
 * docs\source: ?
 * src\connectome: 
+
+### Project milestones
 
 
 ## 💪 Getting Started
