@@ -1,8 +1,7 @@
-"""
-Backend of the project
-"""
-from flask import Flask
+"""Backend of the project."""
+
 import random
+from flask import Flask
 from flask import jsonify
 from flask_cors import CORS, cross_origin
 
