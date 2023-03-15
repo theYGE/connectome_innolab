@@ -1,6 +1,3 @@
-"""
-preprocess UKB data and create connectivity matrix
-"""
 import nibabel as nib
 import numpy as np
 import os
@@ -15,8 +12,6 @@ from nipype.interfaces.fsl.maths import ApplyMask
 from nipype.testing import example_data
 from sklearn.covariance import GraphicalLassoCV
 from sklearn.covariance import GraphLassoCV as GraphicalLassoCV
-
-
 def preprocess_ukb(
     path_atlas_file: str,
     path_normalize_refrence_file:str,
@@ -24,6 +19,19 @@ def preprocess_ukb(
     path_out: str,
     participants_path: str,
 ):
+    """
+    Preprocess UKB data and create connectivity matrix.
+
+    Parameters:
+    path_atlas_file (str): Path to atlas file.
+    path_normalize_refrence_file (str): Path to the reference file for normalization.
+    path_mask_file (str): Path to the mask file.
+    path_out (str): Path to the output directory.
+    participants_path (str): Path to the directory containing participant data.
+
+    Returns:
+    None
+    """
 
     participants = [folder for folder in os.listdir(participants_path) if os.path.isdir(os.path.join(participants_path, folder))]
 
