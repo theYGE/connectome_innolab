@@ -1,5 +1,6 @@
 graft src
 graft tests
+graft server-side
 prune scripts
 prune notebooks
 prune tests/.pytest_cache
