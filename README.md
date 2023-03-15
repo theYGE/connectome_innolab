@@ -9,7 +9,7 @@
 </h1>
 
 <p align="center">
-    <a href="https://github.com//connectome_innolab/actions?query=workflow%3ATests">
+    <!-- <a href="https://github.com//connectome_innolab/actions?query=workflow%3ATests">
         <img alt="Tests" src="https://github.com//connectome_innolab/workflows/Tests/badge.svg" />
     </a>
     <a href="https://pypi.org/project/connectome">
@@ -17,25 +17,25 @@
     </a>
     <a href="https://pypi.org/project/connectome">
         <img alt="PyPI - Python Version" src="https://img.shields.io/pypi/pyversions/connectome" />
-    </a>
-    <a href="https://github.com//connectome_innolab/blob/main/LICENSE">
+    </a> -->
+    <!-- <a href="https://github.com//connectome_innolab/blob/main/LICENSE">
         <img alt="PyPI - License" src="https://img.shields.io/pypi/l/connectome" />
-    </a>
-    <a href='https://connectome.readthedocs.io/en/latest/?badge=latest'>
+    </a> -->
+    <!-- <a href='https://connectome.readthedocs.io/en/latest/?badge=latest'>
         <img src='https://readthedocs.org/projects/connectome/badge/?version=latest' alt='Documentation Status' />
-    </a>
-    <a href="https://codecov.io/gh//connectome_innolab/branch/main">
-        <img src="https://codecov.io/gh//connectome_innolab/branch/main/graph/badge.svg" alt="Codecov status" />
-    </a>  
+    </a> -->
+    <!-- <a href="https://codecov.io/gh//connectome_innolab/branch/main">
+        <img src="https://codecov.io/gh//connectome_innolab/branch/main/graph/badge.svg" alt="Codecov status" /> 
+    </a>  -->
     <a href="https://github.com/cthoyt/cookiecutter-python-package">
         <img alt="Cookiecutter template from @cthoyt" src="https://img.shields.io/badge/Cookiecutter-snekpack-blue" /> 
     </a>
     <a href='https://github.com/psf/black'>
         <img src='https://img.shields.io/badge/code%20style-black-000000.svg' alt='Code style: black' />
     </a>
-    <a href="https://github.com//connectome_innolab/blob/main/.github/CODE_OF_CONDUCT.md">
+    <!-- <a href="https://github.com//connectome_innolab/blob/main/.github/CODE_OF_CONDUCT.md">
         <img src="https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg" alt="Contributor Covenant"/>
-    </a>
+    </a> -->
 </p>
 
 <h1 align="center">
@@ -106,6 +106,10 @@ Our GCN model returns a five dimensional embedding space, which serves as input 
 | **Data & Pre-processing** | <ul><li>Label and categorize UKB data</li><li>Normalize fMRI images into MNI-space & <br /> create connectivity matrices from Yeo7 Atlas</li></ul>|✅|
 |         **Model**         | <ul><li>Implement & train graph neural network on UKB data</li><li>Implement binary classifier (yes/no anomalous connectome)</li></ul>|✅|
 |   **Outputs & backend**   |<ul><li>Create easy-to-use web-hosted application</li><li>Output visualization of patient connectome & connectivity</li></ul>|✅|
+
+### Preliminary results
+
+[@Sven What can we say here? Training/testing loss? Some metric for model accuracy?]
 
 ## 💪 Getting Started
 
