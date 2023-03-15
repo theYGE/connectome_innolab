@@ -45,3 +45,10 @@ def check_atlas(
         logging.info("")
     else:
         logging.info(f"atlas file found. Using {atlas_name}")
+
+
+@log_function_call
+def create_random_corr_mat(write_dir: str, n_ROI: int, n_samples: int) -> None:
+    """
+    create random functional connectivity matrix
+    """
