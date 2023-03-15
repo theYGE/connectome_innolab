@@ -46,8 +46,8 @@ def vgae_graph_embedding(
     # set params
     checkpoint_dir = os.path.join(assets_folder, "checkpoints")
     results_dir = os.path.join(assets_folder, "training_results")
-    now = datetime.now()
-    now = now.strftime("%m-%d-%Y-%H-%M-%S")
+    time = datetime.now()
+    now = str(time.strftime("%m-%d-%Y-%H-%M-%S"))
 
     if not os.path.isdir(checkpoint_dir):
         os.mkdir(checkpoint_dir)
@@ -141,7 +141,7 @@ def vgae_graph_embedding(
     train_ts = pd.Series(train_ts).to_frame(name="training_error")
     val_ts = np.array(val_ts)
     val_ts = pd.Series(val_ts).to_frame(name="validation_error")
-    epochs = pd.Series(range(1, val_ts.size)).to_frame(name="epoch")
+    epochs = pd.Series(range(1, len(val_ts))).to_frame(name="epoch")
     training_results = pd.concat([epochs, train_ts, val_ts], ignore_index=True)
     if name_prefix == "":
         results_name = "training_" + now + "result_.csv"
