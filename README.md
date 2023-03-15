@@ -75,7 +75,7 @@ Patients with any form of brain disorder (ICD-10 Code with prefix F?) were label
 [@Zhiwei Please provide examples & feel free to revise text.]
 ### Pre-processing
 Our pre-processing pipeline involves two parts: normalization and creation of connectivity matrices.  
-To perform normalization, we use the `applywarp` tool from FSL to apply a pre-calculated warp to the input data (UKB). We then apply the `fslmaths` tool from FSL to mask the output image from the previous step with a binary mask image.  
+To perform normalization, we use the `applywarp` tool from [FSL](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki) to apply a pre-calculated warp to the input data (UKB). We then apply the `fslmaths` tool from FSL to mask the output image from the previous step with a binary mask image.  
 For the creation of connectivity matrices, we utilize the [nilearn](https://nilearn.github.io/stable/index.html) package, a Python library for neuroimaging analysis.  
 We have developed a function that produces the connectivity matrices based on the [Schaefer2018_LocalGlobal](https://github.com/ThomasYeoLab/CBIG/tree/master/stable_projects/brain_parcellation/Schaefer2018_LocalGlobal) Atlas file, which includes 400 parcels and 7 networks.  
 Detailed information about parcel names can be found [here](https://github.com/ThomasYeoLab/CBIG/tree/master/stable_projects/brain_parcellation/Schaefer2018_LocalGlobal/Parcellations).
