@@ -61,10 +61,12 @@ The project also includes a front-end (via React) and back-end (via Flask) so it
 > [4] Yeo, B T Thomas et al. “The organization of the human cerebral cortex estimated by intrinsic functional connectivity.” Journal of neurophysiology vol. 106,3 (2011): 1125-65. doi:10.1152/jn.00338.2011
 
 
-## Product demo
+## Prototype demo
+The following video explains how to launch the web-app and use the product.
 
 
-## Details
+
+## Project details
 ### UK Biobank data
 We labeled the UK Biobank (UKB) fMRI data (~26k total) data as 'healthy' (~20k) and 'unhealthy' (~2.1k) utilizing ICD-10 codes and metadata provided by UKB. 
 We excluded c. 4k patients with unrelated diseases (e.g. [Examples?]).
@@ -72,7 +74,11 @@ Patients with any form of brain disorder (ICD-10 Code with prefix F?) were label
 
 [@Zhiwei Please provide examples & feel free to revise text.]
 ### Pre-processing
-[Brief explanation of pre-processing workflow]
+Our pre-processing pipeline involves two parts: normalization and creation of connectivity matrices.  
+To perform normalization, we use the `applywarp` tool from FSL to apply a pre-calculated warp to the input data (UKB). We then apply the `fslmaths` tool from FSL to mask the output image from the previous step with a binary mask image.  
+For the creation of connectivity matrices, we utilize the [nilearn](https://nilearn.github.io/stable/index.html) package, a Python library for neuroimaging analysis.  
+We have developed a function that produces the connectivity matrices based on the [Schaefer2018_LocalGlobal](https://github.com/ThomasYeoLab/CBIG/tree/master/stable_projects/brain_parcellation/Schaefer2018_LocalGlobal) Atlas file, which includes 400 parcels and 7 networks.  
+Detailed information about parcel names can be found [here](https://github.com/ThomasYeoLab/CBIG/tree/master/stable_projects/brain_parcellation/Schaefer2018_LocalGlobal/Parcellations).
 
 ### Model architecture
 The graph based neural network model was implemented using [PyTorch Geometric](https://github.com/pyg-team/pytorch_geometric).
@@ -81,7 +87,8 @@ It has been shown that VGAE-based model performance is competitive compared to o
 Our GCN model returns a five dimensional embedding space, which serves as input for the binary classifier (final layer). 
 
 [@Sven More input here? e.g. number of layers, other model (hyper)parameters]
-## Project structure
+
+### Repository structure
 
 
 ## 💪 Getting Started
