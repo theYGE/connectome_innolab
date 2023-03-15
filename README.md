@@ -5,7 +5,7 @@
 -->
 
 <h1 align="center">
-  connectome
+  Connectome
 </h1>
 
 <p align="center">
@@ -38,11 +38,41 @@
     </a>
 </p>
 
-A proprocessing and graph-based analytics tool of the human connectome.
+<h1 align="center">
+A preprocessing and graph-based analytics tool for anomaly detection in the human connectome.
+</h1>
 
-## Introduction
+<img label='teaser_img' src='data\readme\teaser_image.jpg'>
+
+## Abstract
+Neurological diseases and psychiatric disorders are increasingly prevalent [1][2].
+Despite advanced technological possibilities to measure brain connectivity and functionality, capabilities like functional Magnetic Resonance Imaging [3] are mostly used for research and sparsely for diagnosing neurological disorders in individual patients.  
+**This project aims to provide a platform for medical practitioners to detect disconnectivity in individual patient connectomes and predict the probability of a neurological disorder.**
+Currently, the prototype creates connectivity matrices from pre-processed fMRI images via Yeo7 atlas [4].
+Connectivity matrices are labeled and augmented with metadata (age and gender).
+Then, a graph neural network [(see Model architecture)](#model-architecture), trained on c. 50,000 samples from the UK Biobank dataset [5], detects anomalies using a binary classifier.
+Results are evaluated with a probability of neurological disorder (anomalous connectome), brain regions summary using Niftixxx (@Simei)
+
+
+> [1] https://www.paho.org/en/enlace/burden-neurological-conditions  
+> [2] https://www.who.int/news-room/fact-sheets/detail/mental-disorders  
+> [3] Glover, Gary H. “Overview of functional magnetic resonance imaging.” Neurosurgery clinics of North America vol. 22,2 (2011): 133-9, vii. doi:10.1016/j.nec.2010.11.001  
+> [4] Yeo, B T Thomas et al. “The organization of the human cerebral cortex estimated by intrinsic functional connectivity.” Journal of neurophysiology vol. 106,3 (2011): 1125-65. doi:10.1152/jn.00338.2011
+
+
+
 Hello! <br>
 We are Sven, Oleksandr, Simei, Zhiwei and Thomas. This repo is the result of the Innovationslabor Big Data Science at LMU Munich in the winter term 22/23.
+
+## Product demo
+
+
+
+
+## Model architecture
+
+
+
 
 ## 💪 Getting Started
 
