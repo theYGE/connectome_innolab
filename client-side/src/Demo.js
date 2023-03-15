@@ -1,3 +1,5 @@
+// This is a component for showing user report
+// It was generated based on extracted report
 const myHTML = `<!DOCTYPE html>
 <html lang="en">
 

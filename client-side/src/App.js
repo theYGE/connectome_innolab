@@ -8,7 +8,7 @@ function sayHello() {
 }
 
 
-
+// Main page of the application sgowing the welcome screen and supporint interactions
 function App() {
   return (
     <div className="App">

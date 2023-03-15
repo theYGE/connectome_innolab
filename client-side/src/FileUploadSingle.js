@@ -3,6 +3,7 @@ import {ChangeEvent, useEffect, useState} from 'react';
 import myHTML from "./Demo"
 import conn from "./con.png"
 
+// Component to upload files to the project
 function FileUploadSingle() {
   const [file, setFile] = useState();
   const [response, setResponse] = useState([])
