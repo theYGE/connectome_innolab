@@ -16,14 +16,14 @@ path_list = [
 ]
 
 
-all_files = pd.DataFrame(columns=["filename", "folder"])
+all_files = pd.DataFrame(columns=["filename", "resources"])
 
 for idx, path in enumerate(path_list):
     # find all zip files
     curr_files = [f for f in os.listdir(path) if f.endswith("zip") or f.endswith("7z")]
-    folder = path.split("/")[-1]  # extract folder name
+    folder = path.split("/")[-1]  # extract resources name
     tmp_df = pd.DataFrame(curr_files, columns=["filename"])
-    tmp_df["folder"] = folder
+    tmp_df["resources"] = folder
     all_files = pd.concat([all_files, tmp_df], axis=0)
 
 all_files.to_csv("all_zipfiles.csv")
