@@ -64,6 +64,9 @@ The project also includes a front-end (via React) and back-end (via Flask) so it
 ## Prototype demo
 The following video explains how to launch the web-app and use the product.
 
+https://user-images.githubusercontent.com/90393878/225344887-7d6db93e-7d50-47a6-a762-2934b3016440.mp4
+
+
 
 
 ## Project details
