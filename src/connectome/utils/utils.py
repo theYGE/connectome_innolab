@@ -186,13 +186,12 @@ if __name__ == "__main__":
     DATA_FOLDER = os.path.join(PROJECT_ROOT, "data")
     ASSETS_FOLDER = os.path.join(PROJECT_ROOT, "assets")
     conf_dictionary = OmegaConf.load(
-        "/home/svenmaurice/05_version_control/01_github/connectome_innolab/conf/config.yaml"
+        "/home/svenmaurice/05_version_control/01_github/connectome_innolab/src/conf/config.yaml"
     )
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     patient_fc_path = os.path.join(DATA_FOLDER, "fc_pt")
     model_path = os.path.join(ASSETS_FOLDER, "checkpoints", "graph_embedding1_epoch_1")
 
-    # models_checkpoints = os.path.join(ASSETS_FOLDER, "checkpoints")
-    # model_log = os.path.join(ASSETS_FOLDER, "log", "2023-03-08:20:11:53.csv")
-    # select_optimal_model(models_checkpoints, model_log, erase=False)
-    model = complete_vgae(conf_dictionary, 20)
+    models_checkpoints = os.path.join(ASSETS_FOLDER, "checkpoints")
+    model_log = os.path.join(ASSETS_FOLDER, "log", "2023-03-08:20:11:53.csv")
+    model = select_optimal_model(models_checkpoints, model_log)
