@@ -89,7 +89,11 @@ Our GCN model returns a five dimensional embedding space, which serves as input 
 [@Sven More input here? e.g. number of layers, other model (hyper)parameters]
 
 ### Repository structure
+[@Sven do we need this? Quick overview of the root folders?]
 
+* attic: 
+* data: Data handling & 
+* 
 
 ## 💪 Getting Started
 
