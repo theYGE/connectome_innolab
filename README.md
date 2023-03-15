@@ -50,7 +50,7 @@ Despite advanced technological possibilities to measure brain connectivity and f
 **This project aims to provide a platform for medical practitioners to detect disconnectivity in individual patient connectomes and predict the probability of a neurological disorder.**  
 Currently, the prototype creates connectivity matrices (400x400) from pre-processed fMRI images via Yeo7 atlas with 400 parcels [4].
 Connectivity matrices are labeled and augmented with metadata (age and gender).  
-Then, a graph neural network [(see Model architecture)](#model-architecture), trained on c. 22,000 samples from the [UK Biobank dataset](#uk-biobank-data) [5], detects anomalies using a binary classifier.  
+Then, a graph convolutional network [(see Model architecture)](#model-architecture), trained on samples from the [UK Biobank dataset](#uk-biobank-data) [5], encodes the image to a five dimensional embedding space. A prototype binary classifier is implemented to detect anomalous connectomes (to be trained with further unhealthy connectomes).  
 Results are evaluated with a probability of neurological disorder (anomalous connectome), brain regions summary using Nifti [xx][can you specify exact function @97Simei] and the patients connectivity matrix.  
 The project also includes a front-end (via React) and back-end (via Flask) so it can be easily web-hosted [@theYGE feel free to revise]
 
@@ -86,7 +86,6 @@ Our GCN model returns a five dimensional embedding space, which serves as input 
 [@Sven More input here? e.g. number of layers, other model (hyper)parameters]
 
 ### Repository structure
-[@Sven do we need this? Quick overview of the root folders?]
 
 * attic: 
 * data: Data handling & exploratory analysis of UKB dataset
