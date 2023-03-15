@@ -1,5 +1,6 @@
 graft src
 graft tests
+graft server-side
 graft client-side
 prune scripts
 prune notebooks
