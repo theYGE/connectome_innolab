@@ -98,7 +98,7 @@ Our GCN model returns a five dimensional embedding space, which serves as input 
 |                       | **Goals** | **Status** |
 |:---------------------:|:----|:--------:|
 | **Data & Pre-processing** | <ul><li>Label and categorize UKB data</li><li>Normalize fMRI images into MNI-space & <br /> create connectivity matrices from Yeo7 Atlas</li></ul>|✅|
-|         **Model**         | <ul><li>Implement & train graph neural network on UKB data</li><li>Implement binary classifier (yes/no anomalous connectome)</li></ul>|✅|
+|         **Model**         | <ul><li>Implement & train graph neural network on UKB data</li><li>Prototype binary classifier (yes/no anomalous connectome)</li></ul>|✅|
 |   **Outputs & backend**   |<ul><li>Create easy-to-use web-hosted application</li><li>Output visualization of patient connectome & connectivity</li></ul>|✅|
 
 ### Preliminary results
@@ -143,6 +143,7 @@ $ pip install git+https://github.com//connectome_innolab.git
 Contributions, whether filing an issue, making a pull request, or forking, are appreciated. See
 [CONTRIBUTING.md](https://github.com//connectome_innolab/blob/master/.github/CONTRIBUTING.md) for more information on getting involved.
 <p align="right">(<a href="#top">back to top</a>)</p>
+
 ## 👋 Attribution
 
 ### ⚖️ License
