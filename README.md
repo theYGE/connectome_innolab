@@ -92,8 +92,10 @@ Our GCN model returns a five dimensional embedding space, which serves as input 
 [@Sven do we need this? Quick overview of the root folders?]
 
 * attic: 
-* data: Data handling & 
-* 
+* data: Data handling & exploratory analysis of UKB dataset
+* docs\source: ?
+* src\connectome: 
+
 
 ## 💪 Getting Started
 
