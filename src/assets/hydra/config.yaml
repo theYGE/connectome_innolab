@@ -1,14 +1,21 @@
 params:
   epochs: 2
-  out_channels: 10
   lr: 0.01
   batch_size: 32
   num_workers: 2
   train_share: 0.8
-vgae_architecture:
-  _target_: torch_geometric.nn.ChebConv
-  k: 5
-  out_channels: 10
-  _partial_: true
-layers:
-  _target_: torch_geometric.nn.GCNConv
+  optimizer:
+    _target_: torch.optim.Adam
+    lr: 0.01
+    _partial_: true
+vgae:
+  hidden_out_channels: 20
+  mu_out_channels: 10
+  logstd_out_channels: 10
+  layer_architecture:
+    _target_: torch_geometric.nn.ChebConv
+    K: 5
+    _partial_: true
+  activation:
+    _target_: torch.nn.ReLu
+    _partial_: true
