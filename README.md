@@ -109,14 +109,13 @@ The GCN model as well as the prototype binary classifier need to be trained on m
 ## 💪 Getting Started
 For tips on how to run the preprocessing see [here](examples/preprocessUKB/README.md).
 
-For training a folder with connectivity matrices stored as pytorch tensors (.pt files) is needed.  
-The module `utils.preprocess_matrices` provides functionalities for creating a folder with `.pt` files from a folder with .csv files only.  
+For training a folder with connectivity matrices stored as pytorch tensors (.pt files) is needed.
+The module `utils.preprocess_matrices` provides functionalities for creating a folder with `.pt` files from a folder with .csv files only.  We provided an example image [here](https://github.com/theYGE/connectome_innolab/tree/main/data/example_preprocess_ukb_output/test).  
 Training results are written in `assets` folder. Training creates a folder called `checkpoints`, storing models from each epoch as a pickle file .  
 Further `training_results` folder stores training and validation error as .csv per epoch. 
 `assets\hydra` folder stores .yaml configurations and tracked training results from hydra invoked by the decorator of this function.
 The `checkpoints` and `training_results` folder may be cleaned before training setting `clear-assets` to 'True'.
-Models can be loaded based on lowest validation error using function  
-```utils.select_optimal_model()```
+Models can be loaded based on lowest validation error using `utils.select_optimal_model`.
 
 <!-- ### Command Line Interface
 
