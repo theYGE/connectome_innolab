@@ -9,7 +9,6 @@ from torch_geometric.loader import DataLoader
 from torch_geometric.nn import VGAE
 from utils.utils import GraphDataBase, complete_vgae
 import pandas as pd
-import numpy as np
 import shutil
 from datetime import datetime
 
@@ -137,17 +136,17 @@ def vgae_graph_embedding(
         torch.save(model, checkpoint_path)
         # print(f"saved model to {checkpoint_path}")
     # end of epoch
-    train_ts = np.array(train_ts)
-    train_ts = pd.Series(train_ts).to_frame(name="training_error")
-    val_ts = np.array(val_ts)
-    val_ts = pd.Series(val_ts).to_frame(name="validation_error")
-    epochs = pd.Series(range(1, len(val_ts))).to_frame(name="epoch")
-    training_results = pd.concat([epochs, train_ts, val_ts], ignore_index=True)
+
+    train_epochs = list(range(1, (len(train_ts) + 1)))
+
+    training_results = pd.DataFrame(
+        {"epoch": train_epochs, "training_error": train_ts, "validation_error": val_ts}
+    )
     if name_prefix == "":
-        results_name = "training_" + now + "result_.csv"
+        results_name = "training_" + now + "_result.csv"
     else:
         results_name = name_prefix + ".csv"
-    training_results.to_csv(os.path.join(results_dir, results_name))
+    training_results.to_csv(os.path.join(results_dir, results_name), index=False)
 
 
 if __name__ == "__main__":

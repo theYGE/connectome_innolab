@@ -29,7 +29,7 @@ tramp
 # reftex files
 *.rel
 
-# AUCTeX auto folder
+# AUCTeX auto resources
 /auto/
 
 # cask packages
@@ -183,7 +183,7 @@ ipython_config.py
 # KDE directory preferences
 .directory
 
-# Linux trash folder which might appear on any partition or disk
+# Linux trash resources which might appear on any partition or disk
 .Trash-*
 
 # .nfs files are created when an open file is removed but is still being accessed
@@ -439,7 +439,7 @@ cython_debug/
 #  JetBrains specific template is maintainted in a separate JetBrains.gitignore that can
 #  be found at https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
-#  option (not recommended) you can uncomment the following to ignore the entire idea folder.
+#  option (not recommended) you can uncomment the following to ignore the entire idea resources.
 #.idea/
 
 ### Vim ###
@@ -674,7 +674,7 @@ AutoTest.Net/
 # Web workbench (sass)
 .sass-cache/
 
-# Installshield output folder
+# Installshield output resources
 [Ee]xpress/
 
 # DocProject is a documentation generator add-in
@@ -707,7 +707,7 @@ PublishScripts/
 *.nupkg
 # NuGet Symbol Packages
 *.snupkg
-# The packages folder can be ignored because of Package Restore
+# The packages resources can be ignored because of Package Restore
 **/[Pp]ackages/*
 # except build/, which is used as an MSBuild target.
 !**/[Pp]ackages/build/
@@ -862,7 +862,7 @@ ASALocalRun/
 # NVidia Nsight GPU debugger configuration file
 *.nvuser
 
-# MFractors (Xamarin productivity tool) working folder
+# MFractors (Xamarin productivity tool) working resources
 .mfractor/
 
 # Local History for Visual Studio
@@ -874,10 +874,10 @@ ASALocalRun/
 # BeatPulse healthcheck temp database
 healthchecksdb
 
-# Backup folder for Package Reference Convert tool in Visual Studio 2017
+# Backup resources for Package Reference Convert tool in Visual Studio 2017
 MigrationBackup/
 
-# Ionide (cross platform F# VS Code tools) working folder
+# Ionide (cross platform F# VS Code tools) working resources
 .ionide/
 
 # Fody - auto-generated XML schema
@@ -899,7 +899,7 @@ FodyWeavers.xsd
 # openfMRI datasets
 data/sample_data_*
 
-# .idea folder (pyCharm creates one...)
+# .idea resources (pyCharm creates one...)
 .idea/
 
 # folder for random created correlation matrices
