@@ -82,16 +82,6 @@ Specifically, we employ a Graph Convolutional Network (GCN) as proposed in [Kipf
 It has been shown that VGAE-based model performance is competitive compared to other GCN models for unsupervised learning tasks [(Kipf & Welling, 2017)](https://arxiv.org/abs/1611.07308).
 Our GCN model returns a five dimensional embedding space, which serves as input for the binary classifier (final layer). 
 
-[@Sven More input here? e.g. number of layers, other model (hyper)parameters]
-
-### Repository structure
-
-* attic: 
-* data: Data handling & exploratory analysis of UKB dataset
-* docs\source: ?
-* src\connectome: 
-
-
 ### Project milestones
 |                       | **Goals** | **Status** |
 |:---------------------:|:----|:--------:|
@@ -102,6 +92,19 @@ Our GCN model returns a five dimensional embedding space, which serves as input 
 ### Preliminary results
 
 The GCN model as well as the prototype binary classifier need to be trained on more data (training on UKB dataset still in progress) before meaningful results can be reported.
+
+### Repository structure
+
+* **attic:** Supporting functionalities not included in the source distribution (e.g. create dummy data)
+* **client-side/src & server-side:** Front-end and back-end functionalities, respectively.
+* **data:** Data handling & exploratory analysis of UKB dataset
+* **docs\source:** Files for automatic documentation (to come)
+* **src:** Everything distribution related
+    * **assets:** Saved model epochs, training/validation errors etc.
+    * **conf:** Configuration of models
+    * **connectome:** Model training, architecture and main utils
+* **tests:** Unit testing modules for main functions
+
 
 ## 💪 Getting Started
 For tips on how to run the preprocessing see [here](examples/preprocessUKB/README.md).
