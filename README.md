@@ -119,7 +119,7 @@ $ connectome --help
 > TODO show the most useful thing the CLI does! The CLI will have documentation auto-generated
 by `sphinx`.
 
-## 🚀 Installation
+<!-- ## 🚀 Installation -->
 
 <!-- Uncomment this section after your first ``tox -e finish``
 The most recent release can be installed from
@@ -129,18 +129,18 @@ The most recent release can be installed from
 $ pip install connectome
 ```
 -->
-
+<!-- 
 The most recent code and data can be installed directly from GitHub with:
 
 ```bash
 $ pip install git+https://github.com//connectome_innolab.git
-```
+``` -->
 
-## 👐 Contributing
+<!-- ## 👐 Contributing
 
 Contributions, whether filing an issue, making a pull request, or forking, are appreciated. See
 [CONTRIBUTING.md](https://github.com//connectome_innolab/blob/master/.github/CONTRIBUTING.md) for more information on getting involved.
-<p align="right">(<a href="#top">back to top</a>)</p>
+<p align="right">(<a href="#top">back to top</a>)</p> -->
 
 ## 👋 Attribution
 
@@ -168,7 +168,7 @@ This package was created with [@audreyfeldroy](https://github.com/audreyfeldroy)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-## 🛠️ For Developers
+<!-- ## 🛠️ For Developers
 
 <details>
   <summary>See developer instructions</summary>
@@ -234,7 +234,7 @@ This script does the following:
 5. Bump the version to the next patch. If you made big changes and want to bump the version by minor, you can
    use `tox -e bumpversion minor` after.
 </details>
-<p align="right">(<a href="#top">back to top</a>)</p>
+<p align="right">(<a href="#top">back to top</a>)</p> -->
 
 
 <!--
