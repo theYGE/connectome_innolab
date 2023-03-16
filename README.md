@@ -48,17 +48,16 @@ A preprocessing and graph-based analytics tool for anomaly detection in the huma
 Neurological diseases and psychiatric disorders are increasingly prevalent [1][2].
 Despite advanced technological possibilities to measure brain connectivity and functionality, capabilities like functional Magnetic Resonance Imaging [3] are mostly used for research and sparsely for diagnosing neurological disorders in individual patients.  
 **This project aims to provide a platform for medical practitioners to detect disconnectivity in individual patient connectomes and predict the probability of a neurological disorder.**  
-Currently, the prototype creates connectivity matrices (400x400) from pre-processed fMRI images via Yeo7 atlas with 400 parcels [4].
+Currently, the prototype creates connectivity matrices (400x400) from pre-processed fMRI images via Schaefer2018_Parcellations atlas with 400 parcels [4].
 Connectivity matrices are labeled and augmented with metadata (age and gender).  
 Then, a graph convolutional network [(see Model architecture)](#model-architecture), trained on samples from the [UK Biobank dataset](#uk-biobank-data) [5], encodes the image to a five dimensional embedding space. A prototype binary classifier is implemented to detect anomalous connectomes (to be trained with further unhealthy connectomes).  
-Results are evaluated with a probability of neurological disorder (anomalous connectome), brain regions summary using Nifti [xx][can you specify exact function @97Simei] and the patients connectivity matrix.  
-The project also includes a front-end (via React) and back-end (via Flask) so it can be easily web-hosted [@theYGE feel free to revise]
-
+Results are evaluated with a probability of neurological disorder (anomalous connectome), brain regions summary using [nilearn](https://nilearn.github.io/stable/index.html) and the patients connectivity matrix.  
+The project also includes a front-end (via React) and back-end (via Flask) so it can be easily web-hosted.
 
 > [1] https://www.paho.org/en/enlace/burden-neurological-conditions  
 > [2] https://www.who.int/news-room/fact-sheets/detail/mental-disorders  
 > [3] Glover, Gary H. “Overview of functional magnetic resonance imaging.” Neurosurgery clinics of North America vol. 22,2 (2011): 133-9, vii. doi:10.1016/j.nec.2010.11.001  
-> [4] Yeo, B T Thomas et al. “The organization of the human cerebral cortex estimated by intrinsic functional connectivity.” Journal of neurophysiology vol. 106,3 (2011): 1125-65. doi:10.1152/jn.00338.2011
+> [4] Schaefer A, Kong R, Gordon EM, Laumann TO, Zuo XN, Holmes AJ, Eickhoff SB, Yeo BTT. Local-Global parcellation of the human cerebral cortex from intrinsic functional connectivity MRI. Cerebral Cortex, 29:3095-3114, 2018
 
 
 ## Prototype demo
