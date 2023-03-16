@@ -104,10 +104,17 @@ Our GCN model returns a five dimensional embedding space, which serves as input 
 The GCN model as well as the prototype binary classifier need to be trained on more data (training on UKB dataset still in progress) before meaningful results can be reported.
 
 ## 💪 Getting Started
+For tips on how to run the preprocessing see [here](link).
 
-Explain what to do to run some code examples (e.g. classify sample image, access model...)
+
+To train the model on a dataset (we provided a sample image in [FOLDER PATH]), run:
+
+``` PUT CODE HERE```
 
 
+You can also load a trained model. The following function looks for the model with the smallest [TEST/TRAIN?] error and loads the model:
+
+``` PUT CODE HERE```
 
 
 
