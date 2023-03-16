@@ -1,5 +1,8 @@
 graft src
 graft tests
+graft server-side
+graft client-side
+graft .vscode
 prune scripts
 prune notebooks
 prune tests/.pytest_cache
@@ -14,7 +17,14 @@ recursive-include docs/source *.py
 recursive-include docs/source *.rst
 recursive-include docs/source *.png
 
+include src/assets/hyda
+recursive-include assets *.yaml
+
+
 global-exclude *.py[cod] __pycache__ *.so *.dylib .DS_Store *.gpickle
 
 include README.md LICENSE
 exclude tox.ini .flake8 .bumpversion.cfg .readthedocs.yml
+exclude src/connectome_innolab/assets/hydra
+include requirements.txt
+include conftest.py
