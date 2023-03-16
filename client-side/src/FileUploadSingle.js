@@ -1,7 +1,7 @@
 import {ChangeEvent, useEffect, useState} from 'react';
 // import Demo from './Demo.js';
 import myHTML from "./Demo"
-import conn from "../../assets/con.png"
+import conn from "../../assets/connectome.png"
 
 // Component to upload files to the project
 function FileUploadSingle() {
