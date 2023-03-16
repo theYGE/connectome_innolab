@@ -8,6 +8,9 @@ from hydra.utils import instantiate
 from torch_geometric.loader import DataLoader
 from torch_geometric.nn import VGAE
 from utils.utils import GraphDataBase, complete_vgae
+import pandas as pd
+import shutil
+from datetime import datetime
 
 
 def vgae_graph_embedding(
@@ -15,6 +18,8 @@ def vgae_graph_embedding(
     device: torch.device,
     pt_files: str,
     assets_folder: str,
+    name_prefix: str = "",
+    clear_assets: bool = False,
 ) -> None:
     """
     Train graph variational graph autoencoder.
@@ -29,6 +34,8 @@ def vgae_graph_embedding(
         device (torch.device): GPU or CPU
         pt_files (str): Path to folder with .pt files
         assets_folder (str): Path to assets folder.
+        name_prefix (str): If special name for files in assets should be used.
+        clear_assets (bool): If True remove 'checkpoint' and 'training_result' folder in assets.
     """
     # TODO: logger
     assert os.path.isdir(assets_folder)
@@ -37,8 +44,21 @@ def vgae_graph_embedding(
 
     # set params
     checkpoint_dir = os.path.join(assets_folder, "checkpoints")
+    results_dir = os.path.join(assets_folder, "training_results")
+    time = datetime.now()
+    now = str(time.strftime("%m-%d-%Y-%H-%M-%S"))
+
     if not os.path.isdir(checkpoint_dir):
         os.mkdir(checkpoint_dir)
+    if not os.path.isdir(results_dir):
+        os.mkdir(results_dir)
+    if clear_assets:
+        if os.path.isdir(checkpoint_dir):
+            shutil.rmtree(checkpoint_dir)
+            os.mkdir(checkpoint_dir)
+        if os.path.isdir(results_dir):
+            shutil.rmtree(results_dir)
+            os.mkdir(results_dir)
     params_conf = conf["params"]
     train_share = params_conf["train_share"]
     assert isinstance(train_share, float)
@@ -57,7 +77,8 @@ def vgae_graph_embedding(
     train_loader = DataLoader(train_dataset, batch_size=batch_size)
     val_loader = DataLoader(val_dataset, batch_size=batch_size)
 
-    num_features = dataset.num_features
+    # num_features = dataset.num_features
+    num_features = 1
 
     # set up model from partial model with appropriate parameters for completion
     model = VGAE(complete_vgae(conf, num_features))
@@ -66,6 +87,9 @@ def vgae_graph_embedding(
 
     # complete partial optimizer
     optimizer = optimizer_partial(model.parameters())
+
+    val_ts = []
+    train_ts = []
 
     for epoch in range(1, epochs + 1):
         # print(f"epoch:{str(epoch)}")
@@ -87,6 +111,7 @@ def vgae_graph_embedding(
             optimizer.step()
             training_loss += loss.data.item() * batch_size
         training_loss /= len(train_loader)
+        train_ts.append(training_loss)
         # print(f"epoch {epoch} training_loss: {training_loss}")
 
         for _, batch in enumerate(val_loader):
@@ -100,14 +125,29 @@ def vgae_graph_embedding(
                 loss = loss + (1 / batch.num_nodes) * model.kl_loss()
                 validation_loss += loss.data.item() * batch_size
         validation_loss /= len(val_loader)
+        val_ts.append(validation_loss)
         # print(f"epoch {epoch} validation_loss: {validation_loss}")
 
-        model_name = "graph_embedding1_epoch_" + str(epoch)
+        if name_prefix == "":
+            model_name = "graph_embedding_" + now + "_epoch" + str(epoch)
+        else:
+            model_name = name_prefix + "_epoch_" + str(epoch)
         checkpoint_path = os.path.join(checkpoint_dir, model_name)
         torch.save(model, checkpoint_path)
         # print(f"saved model to {checkpoint_path}")
     # end of epoch
 
+    train_epochs = list(range(1, (len(train_ts) + 1)))
+
+    training_results = pd.DataFrame(
+        {"epoch": train_epochs, "training_error": train_ts, "validation_error": val_ts}
+    )
+    if name_prefix == "":
+        results_name = "training_" + now + "_result.csv"
+    else:
+        results_name = name_prefix + ".csv"
+    training_results.to_csv(os.path.join(results_dir, results_name), index=False)
+
 
 if __name__ == "__main__":
-    root = os.path.dirname(os.path.dirname(os.getcwd()))
+    pass
