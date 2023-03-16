@@ -7,7 +7,7 @@ import pandas as pd
 import torch
 import torch_geometric
 from hydra.utils import instantiate
-from omegaconf import DictConfig, OmegaConf
+from omegaconf import DictConfig
 from torch_geometric.data import Data, Dataset
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
