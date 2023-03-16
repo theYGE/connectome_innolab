@@ -104,7 +104,7 @@ Our GCN model returns a five dimensional embedding space, which serves as input 
 The GCN model as well as the prototype binary classifier need to be trained on more data (training on UKB dataset still in progress) before meaningful results can be reported.
 
 ## 💪 Getting Started
-For tips on how to run the preprocessing see [here](README_preprocess.md).
+For tips on how to run the preprocessing see [here](examples/preprocessUKB/README_preprocess.md).
 
 For training a folder with connectivity matrices stored as pytorch tensors (.pt files) is needed.  
 The module `utils.preprocess_matrices` provides functionalities for creating a folder with `.pt` files from a folder with .csv files only.  
