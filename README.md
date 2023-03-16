@@ -104,19 +104,16 @@ Our GCN model returns a five dimensional embedding space, which serves as input 
 The GCN model as well as the prototype binary classifier need to be trained on more data (training on UKB dataset still in progress) before meaningful results can be reported.
 
 ## 💪 Getting Started
-For tips on how to run the preprocessing see [here](link).
+For tips on how to run the preprocessing see [here](README_preprocess.md).
 
-
-To train the model on a dataset (we provided a sample image in [FOLDER PATH]), run:
-
-``` PUT CODE HERE```
-
-
-You can also load a trained model. The following function looks for the model with the smallest [TEST/TRAIN?] error and loads the model:
-
-``` PUT CODE HERE```
-
-
+For training a folder with connectivity matrices stored as pytorch tensors (.pt files) is needed.  
+The module `utils.preprocess_matrices` provides functionalities for creating a folder with `.pt` files from a folder with .csv files only.  
+Training results are written in `assets` folder. Training creates a folder called `checkpoints`, storing models from each epoch as a pickle file .  
+Further `training_results` folder stores training and validation error as .csv per epoch. 
+`assets\hydra` folder stores .yaml configurations and tracked training results from hydra invoked by the decorator of this function.
+The `checkpoints` and `training_results` folder may be cleaned before training setting `clear-assets` to 'True'.
+Models can be loaded based on lowest validation error using function  
+```utils.select_optimal_model()```
 
 <!-- ### Command Line Interface
 
