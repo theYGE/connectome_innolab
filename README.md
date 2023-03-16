@@ -101,7 +101,7 @@ Our GCN model returns a five dimensional embedding space, which serves as input 
 
 ### Preliminary results
 
-
+The GCN model as well as the prototype binary classifier need to be trained on more data (training on UKB dataset still in progress) before meaningful results can be reported.
 
 ## 💪 Getting Started
 
