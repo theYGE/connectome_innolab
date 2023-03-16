@@ -8,7 +8,10 @@ This script preprocesses UK Biobank (UKB) resting-state functional magnetic reso
 * FSL in your local machine(If you want to run the whole preprocess step than FSL is necessary to be installed on your local machine,please follow the intall step [here](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FslInstallation#Installing_FSL).
 ## Input
 The preprocess.py script requires the following inputs:
-
+* flag_full_process: Flag to mark if the preprocess is in a complete version. If you don't have FSL installed in your local machine you can simply set the ***flag_full_process** into false to use our pre-processed Nifti Image data.
+```bash
+flag_full_process = "Flase"
+```
 * path_atlas_file: Path to the atlas file.
 ```bash
 path_atlas_file = "../../data/atlas/Schaefer2018_400Parcels_7Networks_order_FSLMNI152_2mm.nii.gz"
@@ -23,7 +26,7 @@ path_normalize_refrence_file = "../../data/mask/MNI152_T1_2mm_brain_bin.nii.g"
 ```
 * path_out: Path to the output directory.
 ```bash
-path_out = "../../data/Participants/foldername/foldername.csv"
+path_out = "../../data/example_preprocess_ukb_output"
 ```
 
 * participants_path: Path to the directory containing participants' data. 
@@ -31,7 +34,6 @@ path_out = "../../data/Participants/foldername/foldername.csv"
 ```bash
 participants_path = "../../data/Participants/"
 ```
-
 ## Usage
 To use the script, follow these steps:<br />
     - Install all required dependencies.<br />
