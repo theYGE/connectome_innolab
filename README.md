@@ -112,7 +112,7 @@ For tips on how to run the preprocessing see [here](examples/preprocessUKB/READM
 
 
 For training a folder with connectivity matrices stored as pytorch tensors (.pt files) is needed.  
-The module `utils.preprocess_matrices` provides functionalities for creating a folder with `.pt` files from a folder with .csv files only.  
+The module `utils.preprocess_matrices` provides functionalities for creating a folder with `.pt` files from a folder with .csv files only. We provided an example image [here](https://github.com/theYGE/connectome_innolab/tree/main/data/example_preprocess_ukb_output/test).  
 Training results are written in `assets` folder. Training creates a folder called `checkpoints`, storing models from each epoch as a pickle file .  
 Further `training_results` folder stores training and validation error as .csv per epoch. 
 `assets\hydra` folder stores .yaml configurations and tracked training results from hydra invoked by the decorator of this function.
