@@ -107,7 +107,9 @@ The GCN model as well as the prototype binary classifier need to be trained on m
 
 
 ## 💪 Getting Started
+
 For tips on how to run the preprocessing see [here](examples/preprocessUKB/README.md).
+
 
 For training a folder with connectivity matrices stored as pytorch tensors (.pt files) is needed.  
 The module `utils.preprocess_matrices` provides functionalities for creating a folder with `.pt` files from a folder with .csv files only.  
