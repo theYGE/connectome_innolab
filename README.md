@@ -101,13 +101,16 @@ Our GCN model returns a five dimensional embedding space, which serves as input 
 
 ### Preliminary results
 
-[@Sven What can we say here? Training/testing loss? Some metric for model accuracy?]
+
 
 ## 💪 Getting Started
 
 Explain what to do to run some code examples (e.g. classify sample image, access model...)
 
-### Command Line Interface
+
+
+
+<!-- ### Command Line Interface
 
 The connectome command line tool is automatically installed. It can
 be used from the shell with the `--help` flag to show all subcommands:
@@ -117,7 +120,7 @@ $ connectome --help
 ```
 
 > TODO show the most useful thing the CLI does! The CLI will have documentation auto-generated
-by `sphinx`.
+by `sphinx`. -->
 
 <!-- ## 🚀 Installation -->
 
