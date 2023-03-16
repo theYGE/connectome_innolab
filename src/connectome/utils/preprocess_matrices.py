@@ -19,7 +19,6 @@ def csv_to_pt(
         skip_row (int): number of first n rows to skip while reading csv file.
     """
     assert os.path.isdir(source_path)
-    # TODO: check if all are csv
     if not os.path.isdir(destination_path):
         os.mkdir(destination_path)
     files = os.listdir(source_path)
