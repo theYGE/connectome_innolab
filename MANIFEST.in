@@ -3,6 +3,7 @@ graft tests
 graft examples
 graft server-side
 graft client-side
+graft assets
 graft .vscode
 
 prune scripts
@@ -18,8 +19,7 @@ prune attic
 recursive-include docs/source *.py
 recursive-include docs/source *.rst
 recursive-include docs/source *.png
-
-include src/assets/hyda
+include src/assets/hydra
 recursive-include assets *.yaml
 
 
