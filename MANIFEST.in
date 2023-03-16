@@ -1,8 +1,10 @@
 graft src
 graft tests
+graft examples
 graft server-side
 graft client-side
 graft .vscode
+
 prune scripts
 prune notebooks
 prune tests/.pytest_cache
