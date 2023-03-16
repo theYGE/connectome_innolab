@@ -3,9 +3,13 @@
 
 import os
 import tempfile
+
+import numpy as np
 import torch_geometric.nn
 import torch_geometric
 from src.connectome.utils import utils
+from src.connectome.utils import preprocess_matrices
+from src.connectome.utils import checks
 import torch
 
 
@@ -57,7 +61,46 @@ def test_set_hidden_layer():
     assert hidden_layer_class_name in dir(torch_geometric.nn)
 
 
+# preprocess_matrices
+
+
+def test_csv_to_pt():
+    """Unittest test_csv_to_pt"""
+
+    tmp_folder_source = tempfile.TemporaryDirectory()
+    tmp_folder_destination = tempfile.TemporaryDirectory()
+
+    with tmp_folder_source as source, tmp_folder_destination as destination:
+        source_file_name = os.path.join(source, "test_dummy.csv")
+
+        random_csv = torch.rand(400, 400)
+        random_csv = random_csv.numpy()
+        np.savetxt(source_file_name, random_csv, delimiter=",")
+        preprocess_matrices.csv_to_pt(source_path=source, destination_path=destination)
+        assert len(os.listdir(destination)) == 1
+
+
+# checks
+
+
+def test_check_all_ending():
+    """Unittest check_all_ending"""
+
+    tmp_folder = tempfile.TemporaryDirectory()
+
+    with tmp_folder as tmp:
+        random_data_csv = torch.rand(400, 400)
+        random_data_csv = random_data_csv.numpy()
+        np.savetxt(os.path.join(tmp, "dummy_1.csv"), random_data_csv, delimiter=",")
+        ramdom_data_npy = torch.rand(400, 400)
+        random_data_npy = ramdom_data_npy.numpy()
+        np.save(os.path.join(tmp, "dummy_2.npy"), random_data_npy)
+        val = checks.check_all_ending(train_data_folder=tmp, ending=".csv")
+        assert val == False
+
+
 if __name__ == "__main__":
-    test_graph_data_base()
-    test_set_hidden_layer()
-    test_complete_vgae()
+    # test_graph_data_base()
+    # test_set_hidden_layer()
+    # test_complete_vgae()
+    test_check_all_ending()
