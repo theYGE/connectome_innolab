@@ -2,6 +2,7 @@ graft src
 graft tests
 graft server-side
 graft client-side
+graft .vscode
 prune scripts
 prune notebooks
 prune tests/.pytest_cache
