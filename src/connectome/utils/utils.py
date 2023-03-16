@@ -172,7 +172,7 @@ def select_optimal_model(checkpoints_folder: str, log_file: str):
     val_error_series = data_log["validation_error"]
     idx_min = pd.Series.idxmin(val_error_series)
     epoch = data_log["epoch"].iloc[idx_min]
-    pattern = "epoch_" + str(epoch) + "$"
+    pattern = "epoch" + str(epoch) + "$"
     to_find = re.compile(pattern)
     optimal_model_list = list(filter(to_find.search, models))
     model = torch.load(optimal_model_list[0])
@@ -184,14 +184,9 @@ if __name__ == "__main__":
     SOURCE_DIST_ROOT = os.path.dirname(SOURCE_DIST_ROOT)
     PROJECT_ROOT = os.path.dirname(SOURCE_DIST_ROOT)
     DATA_FOLDER = os.path.join(PROJECT_ROOT, "data")
-    ASSETS_FOLDER = os.path.join(PROJECT_ROOT, "assets")
-    conf_dictionary = OmegaConf.load(
-        "/home/svenmaurice/05_version_control/01_github/connectome_innolab/src/conf/config.yaml"
+    ASSETS_FOLDER = os.path.join(PROJECT_ROOT, "src", "assets")
+    CHECKPOINTS_FOLDER = os.path.join(ASSETS_FOLDER, "checkpoints")
+    TRAINING_RESULTS_FOLDER = os.path.join(
+        ASSETS_FOLDER, "training_results", "training_03-16-2023-17-19-25_result.csv"
     )
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    patient_fc_path = os.path.join(DATA_FOLDER, "fc_pt")
-    model_path = os.path.join(ASSETS_FOLDER, "checkpoints", "graph_embedding1_epoch_1")
-
-    models_checkpoints = os.path.join(ASSETS_FOLDER, "checkpoints")
-    model_log = os.path.join(ASSETS_FOLDER, "log", "2023-03-08:20:11:53.csv")
-    model = select_optimal_model(models_checkpoints, model_log)
+    optimal_model = select_optimal_model(CHECKPOINTS_FOLDER, TRAINING_RESULTS_FOLDER)
