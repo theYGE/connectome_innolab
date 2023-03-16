@@ -172,7 +172,7 @@ def select_optimal_model(checkpoints_folder: str, log_file: str):
     val_error_series = data_log["validation_error"]
     idx_min = pd.Series.idxmin(val_error_series)
     epoch = data_log["epoch"].iloc[idx_min]
-    pattern = "epoch" + str(epoch) + "$"
+    pattern = "epoch_" + str(epoch) + ".pickle$"
     to_find = re.compile(pattern)
     optimal_model_list = list(filter(to_find.search, models))
     model = torch.load(optimal_model_list[0])
@@ -187,6 +187,6 @@ if __name__ == "__main__":
     ASSETS_FOLDER = os.path.join(PROJECT_ROOT, "src", "assets")
     CHECKPOINTS_FOLDER = os.path.join(ASSETS_FOLDER, "checkpoints")
     TRAINING_RESULTS_FOLDER = os.path.join(
-        ASSETS_FOLDER, "training_results", "training_03-16-2023-17-19-25_result.csv"
+        ASSETS_FOLDER, "training_results", "2023-03-01:00:04:50.csv"
     )
     optimal_model = select_optimal_model(CHECKPOINTS_FOLDER, TRAINING_RESULTS_FOLDER)
