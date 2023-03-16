@@ -8,10 +8,6 @@ This script preprocesses UK Biobank (UKB) resting-state functional magnetic reso
 * FSL in your local machine(If you want to run the whole preprocess step than FSL is necessary to be installed on your local machine,please follow the intall step [here](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FslInstallation#Installing_FSL).
 ## Input
 The preprocess.py script requires the following inputs:
-* flag_full_process: Flag to mark if the preprocess is in a complete version. If you don't have FSL installed in your local machine you can simply set the ***flag_full_process** into false to use our pre-processed Nifti Image data.
-```bash
-flag_full_process = "Flase"
-```
 * path_atlas_file: Path to the atlas file.
 ```bash
 path_atlas_file = "../../data/atlas/Schaefer2018_400Parcels_7Networks_order_FSLMNI152_2mm.nii.gz"
@@ -29,8 +25,8 @@ path_normalize_refrence_file = "../../data/mask/MNI152_T1_2mm_brain_bin.nii.g"
 path_out = "../../data/example_preprocess_ukb_output"
 ```
 
-* participants_path: Path to the directory containing participants' data. 
-- To be noticed: there is no file inside the ***participants_path*** folder currently due to the security reason. If you would like to test the preprocess data please download the data from UKBiobank and unzip each particpants' "***filtered_func_data_clean.nii.gz***" file and "***example_func2standard_warp.nii.gz***" file to ***participants_path*** folder.
+* participants_path: Path to the directory containing participants' data.
+***To be noticed***: there is no file inside the ***participants_path*** folder currently due to the security reason. If you would like to test the preprocess data please download the data from UKBiobank and unzip each particpants' "***filtered_func_data_clean.nii.gz***" file and "***example_func2standard_warp.nii.gz***" file to ***participants_path/test** folder.
 ```bash
 participants_path = "../../data/Participants/"
 ```
@@ -45,4 +41,4 @@ python preprocess_ukb.py path_atlas_file path_normalize_refrence_file path_mask_
 Replace path_atlas_file, path_normalize_refrence_file, path_mask_file, path_out, and participants_path with the corresponding file paths in above.
 ## Output
 
-The script outputs a connectivity matrix for each participant in CSV format. The output directory (path_out) will contain a CSV file for each participant.
+The script outputs a connectivity matrix for each participant in CSV format, connectivity matrix figure and a report.html file. The output directory (path_out) will contain the 3 products for each participant.
