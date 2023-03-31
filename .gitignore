@@ -907,5 +907,4 @@ data/corr_mat
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,linux,windows,python,jupyternotebooks,jetbrains,pycharm,vim,emacs,visualstudiocode,visualstudio
 
-data/
 data-archive/
