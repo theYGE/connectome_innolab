@@ -67,11 +67,11 @@ https://user-images.githubusercontent.com/90393878/225344887-7d6db93e-7d50-47a6-
 
 ## Project details
 ### UK Biobank data
-We downloaded and labeled the UK Biobank (UKB) fMRI data (~26k in total) data as 'healthy' (~20k) and as 'patients with significant brain/mental disease' (~2.1k), by utilizing the ICD-10 (International Classification of Diseases, version 10) codes and metadata provided by UKB. We selected the healthy participants by finding out the ones without any significant general diseases (we screened around 1k diseases in total, i.e., cancers). And the 'patients' are defined as participants who have any form of significant brain/mental disease (ICD-10 Code with prefix F, i.e. Alzheimer’s disease).
+We downloaded and labeled fMRI data (~26k in total) data as 'healthy' (~20k) and as 'patients with significant brain/mental disease' (~2.1k), by utilizing the ICD-10 (International Classification of Diseases, version 10) codes and metadata. We selected the healthy participants by finding out the ones without any significant general diseases (we screened around 1k diseases in total, i.e., cancers). And the 'patients' are defined as participants who have any form of significant brain/mental disease (ICD-10 Code with prefix F, i.e. Alzheimer’s disease).
 
 ### Pre-processing
 Our pre-processing pipeline involves two parts: normalization and creation of connectivity matrices.  
-To perform normalization, we use the `applywarp` from [FSL](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki) to apply a pre-calculated warp to the input data (UKB). We then apply the `fslmaths` from FSL to mask the output image from the previous step with a binary mask image.  
+To perform normalization, we use the `applywarp` from [FSL](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki) to apply a pre-calculated warp to the input data. We then apply the `fslmaths` from FSL to mask the output image from the previous step with a binary mask image.  
 For the creation of connectivity matrices, we utilize the [nilearn](https://nilearn.github.io/stable/index.html) package, a Python library for neuroimaging analysis.  
 We have developed a function that produces the connectivity matrices based on the [Schaefer2018_LocalGlobal](https://github.com/ThomasYeoLab/CBIG/tree/master/stable_projects/brain_parcellation/Schaefer2018_LocalGlobal) Atlas file, which includes 400 parcels and 7 networks.
 Detailed information about parcel names can be found [here](https://github.com/ThomasYeoLab/CBIG/tree/master/stable_projects/brain_parcellation/Schaefer2018_LocalGlobal/Parcellations).
@@ -85,19 +85,19 @@ Our GCN model returns a five dimensional embedding space, which serves as input 
 ### Project milestones
 |                       | **Goals** | **Status** |
 |:---------------------:|:----|:--------:|
-| **Data & Pre-processing** | <ul><li>Label and categorize UKB data</li><li>Normalize fMRI images into MNI-space & <br /> create connectivity matrices from Yeo7 Atlas</li></ul>|✅|
-|         **Model**         | <ul><li>Implement & train graph neural network on UKB data</li><li>Prototype binary classifier (yes/no anomalous connectome)</li></ul>|✅|
+| **Data & Pre-processing** | <ul><li>Label and categorize data</li><li>Normalize fMRI images into MNI-space & <br /> create connectivity matrices from Yeo7 Atlas</li></ul>|✅|
+|         **Model**         | <ul><li>Implement & train graph neural network on data</li><li>Prototype binary classifier (yes/no anomalous connectome)</li></ul>|✅|
 |   **Outputs & backend**   |<ul><li>Create easy-to-use web-hosted application</li><li>Output visualization of patient connectome & connectivity</li></ul>|✅|
 
 ### Preliminary results
 
-The GCN model as well as the prototype binary classifier need to be trained on more data (training on UKB dataset still in progress) before meaningful results can be reported.
+The GCN model as well as the prototype binary classifier need to be trained on more data (training on dataset still in progress) before meaningful results can be reported.
 
 ### Repository structure
 
 * **attic:** Supporting functionalities not included in the source distribution (e.g. create dummy data)
 * **client-side/src & server-side:** Front-end and back-end functionalities, respectively.
-* **data:** Data handling & exploratory analysis of UKB dataset
+* **data:** Data handling & exploratory analysis of dataset
 * **docs\source:** Files for automatic documentation (to come)
 * **src:** Everything distribution related
     * **assets:** Saved model epochs, training/validation errors etc.
