@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""This module contains the model(s) used for training GNN on functional connectivity matrices from UKB"""
+"""This module contains the model(s) used for training GNN on functional connectivity matrices from large fMRI dataset"""
 
 import torch
 
