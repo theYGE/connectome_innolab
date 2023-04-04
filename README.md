@@ -50,7 +50,7 @@ Despite advanced technological possibilities to measure brain connectivity and f
 **This project aims to provide a platform for medical practitioners to detect disconnectivity in individual patient connectomes and predict the probability of a neurological disorder.**  
 Currently, the prototype creates connectivity matrices (400x400) from pre-processed fMRI images via Schaefer2018_Parcellations atlas with 400 parcels [4].
 Connectivity matrices are labeled and augmented with metadata (age and gender).  
-Then, a graph convolutional network [(see Model architecture)](#model-architecture), trained on samples from the [UK Biobank dataset](#uk-biobank-data) [5], encodes the image to a five dimensional embedding space. A prototype binary classifier is implemented to detect anomalous connectomes (to be trained with further unhealthy connectomes).  
+Then, a graph convolutional network [(see Model architecture)](#model-architecture), trained on samples from the large fMRI dataset, encodes the image to a five dimensional embedding space. A prototype binary classifier is implemented to detect anomalous connectomes (to be trained with further unhealthy connectomes).  
 Results are evaluated with a probability of neurological disorder (anomalous connectome), brain regions summary using [nilearn](https://nilearn.github.io/stable/index.html) and the patients connectivity matrix.  
 The project also includes a front-end (via React) and back-end (via Flask) so it can be easily web-hosted.
 
@@ -66,12 +66,12 @@ The following video explains how to launch the web-app and use the product.
 https://user-images.githubusercontent.com/90393878/225344887-7d6db93e-7d50-47a6-a762-2934b3016440.mp4
 
 ## Project details
-### UK Biobank data
-We downloaded and labeled the UK Biobank (UKB) fMRI data (~26k in total) data as 'healthy' (~20k) and as 'patients with significant brain/mental disease' (~2.1k), by utilizing the ICD-10 (International Classification of Diseases, version 10) codes and metadata provided by UKB. We selected the healthy participants by finding out the ones without any significant general diseases (we screened around 1k diseases in total, i.e., cancers). And the 'patients' are defined as participants who have any form of significant brain/mental disease (ICD-10 Code with prefix F, i.e. Alzheimer’s disease).
+### large fMRI dataset
+We downloaded and labeled large fMRI dataset (~26k in total) data as 'healthy' (~20k) and as 'patients with significant brain/mental disease' (~2.1k), by utilizing the ICD-10 (International Classification of Diseases, version 10) codes and metadata provided by large fMRI dataset. We selected the healthy participants by finding out the ones without any significant general diseases (we screened around 1k diseases in total, i.e., cancers). And the 'patients' are defined as participants who have any form of significant brain/mental disease (ICD-10 Code with prefix F, i.e. Alzheimer’s disease).
 
 ### Pre-processing
 Our pre-processing pipeline involves two parts: normalization and creation of connectivity matrices.  
-To perform normalization, we use the `applywarp` from [FSL](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki) to apply a pre-calculated warp to the input data (UKB). We then apply the `fslmaths` from FSL to mask the output image from the previous step with a binary mask image.  
+To perform normalization, we use the `applywarp` from [FSL](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki) to apply a pre-calculated warp to the input data (large fMRI dataset). We then apply the `fslmaths` from FSL to mask the output image from the previous step with a binary mask image.  
 For the creation of connectivity matrices, we utilize the [nilearn](https://nilearn.github.io/stable/index.html) package, a Python library for neuroimaging analysis.  
 We have developed a function that produces the connectivity matrices based on the [Schaefer2018_LocalGlobal](https://github.com/ThomasYeoLab/CBIG/tree/master/stable_projects/brain_parcellation/Schaefer2018_LocalGlobal) Atlas file, which includes 400 parcels and 7 networks.
 Detailed information about parcel names can be found [here](https://github.com/ThomasYeoLab/CBIG/tree/master/stable_projects/brain_parcellation/Schaefer2018_LocalGlobal/Parcellations).
@@ -82,32 +82,37 @@ Specifically, we employ a Graph Convolutional Network (GCN) as proposed in [Kipf
 It has been shown that VGAE-based model performance is competitive compared to other GCN models for unsupervised learning tasks [(Kipf & Welling, 2017)](https://arxiv.org/abs/1611.07308).
 Our GCN model returns a five dimensional embedding space, which serves as input for the binary classifier (final layer). 
 
-[@Sven More input here? e.g. number of layers, other model (hyper)parameters]
-
-### Repository structure
-
-* attic: 
-* data: Data handling & exploratory analysis of UKB dataset
-* docs\source: ?
-* src\connectome: 
-
-
 ### Project milestones
-|                       | **Goals** | **Status** |
-|:---------------------:|:----|:--------:|
-| **Data & Pre-processing** | <ul><li>Label and categorize UKB data</li><li>Normalize fMRI images into MNI-space & <br /> create connectivity matrices from Yeo7 Atlas</li></ul>|✅|
-|         **Model**         | <ul><li>Implement & train graph neural network on UKB data</li><li>Prototype binary classifier (yes/no anomalous connectome)</li></ul>|✅|
-|   **Outputs & backend**   |<ul><li>Create easy-to-use web-hosted application</li><li>Output visualization of patient connectome & connectivity</li></ul>|✅|
+|                       | **Goals**                                                                                                                                                 | **Status** |
+|:---------------------:|:----------------------------------------------------------------------------------------------------------------------------------------------------------|:--------:|
+| **Data & Pre-processing** | <ul><li>Label and categorize large fMRI data</li><li>Normalize fMRI images into MNI-space & <br /> create connectivity matrices from Yeo7 Atlas</li></ul> |✅|
+|         **Model**         | <ul><li>Implement & train graph neural network on large fMRI data</li><li>Prototype binary classifier (yes/no anomalous connectome)</li></ul>             |✅|
+|   **Outputs & backend**   | <ul><li>Create easy-to-use web-hosted application</li><li>Output visualization of patient connectome & connectivity</li></ul>                             |✅|
 
 ### Preliminary results
 
-The GCN model as well as the prototype binary classifier need to be trained on more data (training on UKB dataset still in progress) before meaningful results can be reported.
+The GCN model as well as the prototype binary classifier need to be trained on more data (training on large fMRI dataset still in progress) before meaningful results can be reported.
+
+### Repository structure
+
+* **attic:** Supporting functionalities not included in the source distribution (e.g. create dummy data)
+* **client-side/src & server-side:** Front-end and back-end functionalities, respectively.
+* **data:** Data handling & exploratory analysis of large fMRI dataset
+* **docs\source:** Files for automatic documentation (to come)
+* **src:** Everything distribution related
+    * **assets:** Saved model epochs, training/validation errors etc.
+    * **conf:** Configuration of models
+    * **connectome:** Model training, architecture and main utils
+* **tests:** Unit testing modules for main functions
+
 
 ## 💪 Getting Started
-For tips on how to run the preprocessing see [here](examples/preprocessUKB/README_preprocess.md).
+
+For tips on how to run the preprocessing see [here](examples/preprocessUKB/README.md).
+
 
 For training a folder with connectivity matrices stored as pytorch tensors (.pt files) is needed.  
-The module `utils.preprocess_matrices` provides functionalities for creating a folder with `.pt` files from a folder with .csv files only.  
+The module `utils.preprocess_matrices` provides functionalities for creating a folder with `.pt` files from a folder with .csv files only. We provided an example image [here](https://github.com/theYGE/connectome_innolab/tree/main/data/example_preprocess_ukb_output/test).  
 Training results are written in `assets` folder. Training creates a folder called `checkpoints`, storing models from each epoch as a pickle file .  
 Further `training_results` folder stores training and validation error as .csv per epoch. 
 `assets\hydra` folder stores .yaml configurations and tracked training results from hydra invoked by the decorator of this function.
