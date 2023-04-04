@@ -1,5 +1,5 @@
 # connectome_innolab_preprocess_ukb_complete
-This script preprocesses UK Biobank (UKB) resting-state functional magnetic resonance imaging (fMRI) data and creates a connectivity matrix using the Nilearn and Nipype libraries. The following instructions will help you use this script.
+This script preprocesses large resting-state functional magnetic resonance imaging (fMRI) data and creates a connectivity matrix using the Nilearn and Nipype libraries. The following instructions will help you use this script.
 ## Requirements
 * Python 3.7 or higher
 * Nilearn>=0.9.2
@@ -26,7 +26,7 @@ path_out = "../../data/example_preprocess_ukb_output"
 ```
 
 * participants_path: Path to the directory containing participants' data.
-***To be noticed***: there is no file inside the ***participants_path*** folder currently due to the security reason. If you would like to test the preprocess data please download the data from UKBiobank and unzip each particpants' "***filtered_func_data_clean.nii.gz***" file and "***example_func2standard_warp.nii.gz***" file to ***participants_path/test** folder.
+***To be noticed***: there is no file inside the ***participants_path*** folder currently due to the security reason. If you would like to test the preprocess data please download the data from large fMRI datset and unzip each particpants' "***filtered_func_data_clean.nii.gz***" file and "***example_func2standard_warp.nii.gz***" file to ***participants_path/test** folder.
 ```bash
 participants_path = "../../data/Participants/"
 ```
