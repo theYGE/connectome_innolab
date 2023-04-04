@@ -58,7 +58,7 @@ def get_general_diseases():
     icd_block_list = [i for i in icd_diseases if "-" in i]
     icd_single_list = list(set(icd_diseases) - set(icd_block_list))
 
-    # delete the icd entries that are not included in UKbiobank icd10.
+    # delete the icd entries that are not included in large fMRI dataset icd10.
     # single disease
     to_be_del = [i for i in target_single_list if i not in icd_single_list]
     target_single_list = list(set(target_single_list) - set(to_be_del))

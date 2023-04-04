@@ -22,7 +22,7 @@ def preprocess_ukb(
     participants_path: str,     
 ):
     """
-    Preprocess UKB data and create connectivity matrix.
+    Preprocess large fMRI dataset data and create connectivity matrix.
 
     Parameters:
     path_atlas_file (str): Path to atlas file.

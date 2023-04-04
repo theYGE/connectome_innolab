@@ -67,7 +67,7 @@ https://user-images.githubusercontent.com/90393878/225344887-7d6db93e-7d50-47a6-
 
 ## Project details
 ### large fMRI dataset
-We downloaded and labeled large fMRI dataset (~26k in total) data as 'healthy' (~20k) and as 'patients with significant brain/mental disease' (~2.1k), by utilizing the ICD-10 (International Classification of Diseases, version 10) codes and metadata provided by UKB. We selected the healthy participants by finding out the ones without any significant general diseases (we screened around 1k diseases in total, i.e., cancers). And the 'patients' are defined as participants who have any form of significant brain/mental disease (ICD-10 Code with prefix F, i.e. Alzheimer’s disease).
+We downloaded and labeled large fMRI dataset (~26k in total) data as 'healthy' (~20k) and as 'patients with significant brain/mental disease' (~2.1k), by utilizing the ICD-10 (International Classification of Diseases, version 10) codes and metadata provided by large fMRI dataset. We selected the healthy participants by finding out the ones without any significant general diseases (we screened around 1k diseases in total, i.e., cancers). And the 'patients' are defined as participants who have any form of significant brain/mental disease (ICD-10 Code with prefix F, i.e. Alzheimer’s disease).
 
 ### Pre-processing
 Our pre-processing pipeline involves two parts: normalization and creation of connectivity matrices.  
